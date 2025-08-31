@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  OPEN
+  PROCESSING
+  CLOSED
+}
+
+model Admin {
+  id       String @id @default(uuid())
+  email    String
+  password String
+  name     String @default("Admin")
+
+  @@map("admins")
+}
+
+model Technician {
+  id           String @id @default(uuid())
+  email        String
+  password     String
+  name         String
+  profilePhoto String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tickets Ticket[]
+
+  @@map("technicians")
+}
+
+model Client {
+  id           String @id @default(uuid())
+  email        String
+  password     String
+  name         String
+  profilePhoto String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tickets Ticket[]
+
+  @@map("clients")
+}
+
+model Ticket {
+  id           String  @id @default(uuid())
+  title        String
+  description  String
+  clientId     String
+  technicianId String
+  categoryId   String
+  initialCost  Decimal @default(200.00)
+
+  costs      TicketCost[]
+  category   Category     @relation(fields: [categoryId], references: [id])
+  status     Status       @default(OPEN)
+  client     Client       @relation(fields: [clientId], references: [id])
+  technician Technician   @relation(fields: [technicianId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("tickets")
+}
+
+model TicketCost {
+  id       String  @id @default(uuid())
+  name     String
+  amount   Decimal
+  ticketId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  @@map("ticket_costs")
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  tickets   Ticket[]
+}
