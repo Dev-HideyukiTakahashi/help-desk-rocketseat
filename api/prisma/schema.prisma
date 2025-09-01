@@ -7,10 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Status {
+enum TicketStatus {
   OPEN
   PROCESSING
   CLOSED
+}
+
+enum ServiceStatus {
+  ACTIVE
+  INACTIVE
 }
 
 enum Role {
@@ -64,10 +69,22 @@ model Technician {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user    User     @relation(fields: [userId], references: [id])
-  tickets Ticket[]
+  user         User          @relation(fields: [userId], references: [id])
+  tickets      Ticket[]
+  availability Availability?
 
   @@map("technicians")
+}
+
+model Availability {
+  id           String   @id @default(uuid())
+  technicianId String   @unique
+  startTime    DateTime
+  endTime      DateTime
+
+  technician Technician @relation(fields: [technicianId], references: [id])
+
+  @@map("availabilities")
 }
 
 model Ticket {
@@ -76,12 +93,10 @@ model Ticket {
   description  String
   clientId     String
   technicianId String
-  categoryId   String
   initialCost  Decimal @default(200.00)
 
-  costs      TicketCost[]
-  category   Category     @relation(fields: [categoryId], references: [id])
-  status     Status       @default(OPEN)
+  services   Service[]
+  status     TicketStatus @default(OPEN)
   client     Client       @relation(fields: [clientId], references: [id])
   technician Technician   @relation(fields: [technicianId], references: [id])
 
@@ -91,24 +106,16 @@ model Ticket {
   @@map("tickets")
 }
 
-model TicketCost {
-  id       String  @id @default(uuid())
-  name     String
-  amount   Decimal
+model Service {
+  id       String        @id @default(uuid())
+  title    String
+  value    Decimal
   ticketId String
-
-  createdAt DateTime @default(now()) @map("created_at")
-
-  ticket Ticket @relation(fields: [ticketId], references: [id])
-
-  @@map("ticket_costs")
-}
-
-model Category {
-  id   String @id @default(uuid())
-  name String
+  status   ServiceStatus
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  tickets   Ticket[]
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+
+  @@map("services")
 }
