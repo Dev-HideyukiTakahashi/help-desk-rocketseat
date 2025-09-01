@@ -13,43 +13,61 @@ enum Status {
   CLOSED
 }
 
-model Admin {
+enum Role {
+  ADMIN
+  CLIENT
+  TECHNICIAN
+}
+
+model User {
   id       String @id @default(uuid())
-  email    String
+  email    String @unique
   password String
-  name     String @default("Admin")
+  name     String
+
+  role       Role
+  admin      Admin?
+  client     Client?
+  technician Technician?
+
+  @@map("users")
+}
+
+model Admin {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  user User @relation(fields: [userId], references: [id])
 
   @@map("admins")
 }
 
-model Technician {
-  id           String @id @default(uuid())
-  email        String
-  password     String
-  name         String
-  profilePhoto String
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  tickets Ticket[]
-
-  @@map("technicians")
-}
-
 model Client {
   id           String @id @default(uuid())
-  email        String
-  password     String
-  name         String
+  userId       String @unique
   profilePhoto String
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  user    User     @relation(fields: [userId], references: [id])
   tickets Ticket[]
 
   @@map("clients")
+}
+
+model Technician {
+  id           String @id @default(uuid())
+  userId       String @unique
+  profilePhoto String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user    User     @relation(fields: [userId], references: [id])
+  tickets Ticket[]
+
+  @@map("technicians")
 }
 
 model Ticket {
