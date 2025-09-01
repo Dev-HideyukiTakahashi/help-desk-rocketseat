@@ -32,6 +32,6 @@ export class TechnicianService {
     const { password: _, ...userWithoutPassword } = technicianData;
     const technician = TechnicianDTO.parse(userWithoutPassword);
 
-    return { technician };
+    return technician;
   }
 }
