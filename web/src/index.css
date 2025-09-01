@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import 'tailwindcss';
+
+@theme {
+  --color-blue-dark: #2e3da3;
+  --color-blue-base: #5165e1;
+  --color-blue-light: #8996eb;
+
+  --color-gray-100: #151619;
+  --color-gray-200: #1e2024;
+  --color-gray-300: #535964;
+  --color-gray-400: #858b99;
+  --color-gray-500: #e3e5e8;
+  --color-gray-600: #f9fafa;
+
+  --color-feedback-danger: #d03e3e;
+  --color-feedback-open: #cc3d6a;
+  --color-feedback-progress: #355ec5;
+  --color-feedback-done: #508b26;
+
+  --font-lato: 'Lato', sans-serif;
+}
