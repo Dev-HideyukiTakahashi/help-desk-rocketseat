@@ -5,7 +5,6 @@ export const UserDTO = z.object({
   email: z.email(),
   name: z.string(),
   role: z.string(),
-  profilePhoto: z.string().optional(),
 });
 
 export type UserDTOSchema = z.infer<typeof UserDTO>;
