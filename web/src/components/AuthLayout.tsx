@@ -3,7 +3,7 @@ import navHeaderLogoSvg from '../assets/img/NavHeader.svg';
 
 export function AuthLayout() {
   return (
-    <div className="w-full h-screen bg-[url(./assets/img/Login_Background.png)] bg-cover flex flex-col md:flex-row ">
+    <div className="min-h-screen w-full bg-[url(./assets/img/Login_Background.png)] bg-cover flex flex-col md:flex-row ">
       <div className="md:flex-grow"></div>
       <main
         className="bg-gray-600 flex flex-col items-center

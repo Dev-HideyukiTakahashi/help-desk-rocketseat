@@ -5,6 +5,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1, 'JWT_SECRET deve ser fornecido'),
   JWT_EXPIRES_IN: z.coerce.number().optional().default(86400),
   PORT: z.coerce.number().optional().default(3333),
+  FRONTEND_URL: z.url(),
 });
 
 const _env = envSchema.safeParse(process.env);

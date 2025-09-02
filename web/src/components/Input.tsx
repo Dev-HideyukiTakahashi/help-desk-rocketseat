@@ -18,7 +18,6 @@ export function Input({ legend, type = 'text', placeholder, ...rest }: Props) {
       </label>
       <input
         type={type}
-        id="input"
         placeholder={placeholder}
         className="h-[40px] border-b border-gray-400
           focus:border-blue-base outline-none
