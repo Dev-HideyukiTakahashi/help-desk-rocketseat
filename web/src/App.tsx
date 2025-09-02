@@ -1,10 +1,11 @@
-import { AuthLayout } from './components/AuthLayout';
+import { AuthProvider } from './contexts/AuthContext';
+import { Routes } from './routes';
 
 function App() {
   return (
-    <>
-      <AuthLayout />
-    </>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   );
 }
 
