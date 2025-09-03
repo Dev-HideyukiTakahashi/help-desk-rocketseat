@@ -1,3 +1,3 @@
 export function Ticket() {
-  return <h1>TIckets</h1>;
+  return <h1>Meus chamados</h1>;
 }
