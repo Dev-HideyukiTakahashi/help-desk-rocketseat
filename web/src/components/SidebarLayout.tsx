@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router';
 import LogoIconSvg from '../assets/img/Logo_IconLight.svg';
 import { useAuth } from '../hooks/useAuth';
 import { getInitials } from '../utils/get-name-initials';
@@ -23,13 +24,16 @@ export function SidebarLayout() {
         </header>
         <nav className="flex flex-col items-center justify-center mt-6 gap-1 ">
           {/* TICKETS */}
-          <a
-            className="flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400
-            cursor-pointer hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
-          "
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400 cursor-pointer
+            hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
+              ${isActive ? 'bg-blue-dark text-gray-600 rounded-sm' : ''}`
+            }
           >
             <svg
-              className="w-5 h-5 fill-current ml-6"
+              className="w-5 h-5 fill-current ml-2"
               viewBox="0 0 32 32"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -40,18 +44,23 @@ export function SidebarLayout() {
                 fill="currentColor"
               />
             </svg>
-            <span className="text-sm font-lato">Chamados</span>
-          </a>
+            <span className="text-sm font-lato">
+              {session?.user.role === 'ADMIN' ? 'Chamados' : 'Meus Chamados'}
+            </span>
+          </NavLink>
 
           {/* ADD TICKET */}
           {session?.user.role === 'CLIENT' && (
-            <a
-              className="flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400
-            cursor-pointer hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
-          "
+            <NavLink
+              to={'/tickets'}
+              className={({ isActive }) =>
+                `flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400 cursor-pointer
+              hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
+                ${isActive ? 'bg-blue-dark text-gray-600 rounded-sm' : ''}`
+              }
             >
               <svg
-                className="w-5 h-5 fill-current ml-6"
+                className="w-5 h-5 fill-current ml-2"
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -63,18 +72,21 @@ export function SidebarLayout() {
                 />
               </svg>
               <span className="text-sm font-lato">Criar chamado</span>
-            </a>
+            </NavLink>
           )}
 
           {/* TECHNICIANS */}
           {session?.user.role === 'ADMIN' && (
-            <a
-              className="flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400
-            cursor-pointer hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
-          "
+            <NavLink
+              to="/technicians"
+              className={({ isActive }) =>
+                `flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400 cursor-pointer
+              hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
+                ${isActive ? 'bg-blue-dark text-gray-600 rounded-sm' : ''}`
+              }
             >
               <svg
-                className="w-5 h-5 fill-current ml-6"
+                className="w-5 h-5 fill-current ml-2"
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -86,18 +98,21 @@ export function SidebarLayout() {
                 />
               </svg>
               <span className="text-sm font-lato">Técnicos</span>
-            </a>
+            </NavLink>
           )}
 
           {/* CLIENTS */}
           {session?.user.role === 'ADMIN' && (
-            <a
-              className="flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400
-            cursor-pointer hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
-          "
+            <NavLink
+              to="/clients"
+              className={({ isActive }) =>
+                `flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400 cursor-pointer
+              hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
+                ${isActive ? 'bg-blue-dark text-gray-600 rounded-sm' : ''}`
+              }
             >
               <svg
-                className="w-5 h-5 fill-current ml-6"
+                className="w-5 h-5 fill-current ml-2"
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -107,18 +122,21 @@ export function SidebarLayout() {
                 />
               </svg>
               <span className=" text-sm font-lato">Clientes</span>
-            </a>
+            </NavLink>
           )}
 
           {/* SERVICES */}
           {session?.user.role === 'ADMIN' && (
-            <a
-              className="flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400
-            cursor-pointer hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
-          "
+            <NavLink
+              to="/services"
+              className={({ isActive }) =>
+                `flex items-center gap-[12px] min-w-[156px] h-[44px] text-gray-400 cursor-pointer
+              hover:bg-blue-dark hover:rounded-sm hover:text-gray-600
+                ${isActive ? 'bg-blue-dark text-gray-600 rounded-sm' : ''}`
+              }
             >
               <svg
-                className="w-5 h-5 fill-current ml-6"
+                className="w-5 h-5 fill-current ml-2"
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -130,7 +148,7 @@ export function SidebarLayout() {
                 />
               </svg>
               <span className="text-sm font-lato">Serviços</span>
-            </a>
+            </NavLink>
           )}
         </nav>
         <footer className="border-t-1 border-gray-200 flex gap-3 mt-auto p-5">

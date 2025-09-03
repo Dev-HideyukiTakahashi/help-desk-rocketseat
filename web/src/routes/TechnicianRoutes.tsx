@@ -1,13 +1,16 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from '../components/AppLayout';
-import { Tickets } from '../pages/Tickets';
+import { NotFound } from '../pages/NotFound';
+import { Ticket } from '../pages/Ticket';
 
 export function TechnicianRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route path="/" element={<Tickets />} />
+        <Route path="/" element={<Ticket />} />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

@@ -10,6 +10,11 @@ export function Routes() {
   const { session, isLoading } = useAuth();
 
   function Route() {
+    if (!session) {
+      return <AuthRoutes />;
+    }
+
+    console.log(session.user.role);
     switch (session?.user.role) {
       case 'ADMIN':
         return <AdminRoutes />;
