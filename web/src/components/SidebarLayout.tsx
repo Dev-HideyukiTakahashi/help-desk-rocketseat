@@ -7,7 +7,6 @@ import { translateRole } from '../utils/translate-role';
 export function SidebarLayout() {
   const { session, remove } = useAuth();
 
-  console.log(session);
   return (
     <>
       <aside className="flex flex-col">
