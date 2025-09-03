@@ -1,10 +1,13 @@
 import { Route, Routes } from 'react-router';
-import { ClientDashboard } from '../pages/ClientDashboard';
+import { AppLayout } from '../components/AppLayout';
+import { Tickets } from '../pages/Tickets';
 
 export function ClientRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<ClientDashboard />} />
+      <Route path="/" element={<AppLayout />}>
+        <Route path="/" element={<Tickets />} />
+      </Route>
     </Routes>
   );
 }

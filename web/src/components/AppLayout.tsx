@@ -1,5 +1,11 @@
+import { MainLayout } from './MainLayout';
+import { SidebarLayout } from './SidebarLayout';
+
 export function AppLayout() {
-  // TODO
-  // HEADER E FOOTER E MAIS COISAS EM COMUM
-  return <h1>Oi</h1>;
+  return (
+    <div className="grid grid-cols-[200px_1fr] w-full min-h-screen bg-gray-100">
+      <SidebarLayout />
+      <MainLayout />
+    </div>
+  );
 }
