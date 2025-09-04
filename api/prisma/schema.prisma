@@ -95,7 +95,8 @@ model Ticket {
   technicianId String
   initialCost  Decimal @default(200.00)
 
-  services   Service[]
+  services Service[] @relation("TicketServices", map: "ticket_services")
+
   status     TicketStatus @default(OPEN)
   client     Client       @relation(fields: [clientId], references: [id])
   technician Technician   @relation(fields: [technicianId], references: [id])
@@ -107,15 +108,15 @@ model Ticket {
 }
 
 model Service {
-  id       String        @id @default(uuid())
-  title    String
-  value    Decimal
-  ticketId String
-  status   ServiceStatus
+  id     String        @id @default(uuid())
+  title  String
+  value  Decimal
+  status ServiceStatus @default(ACTIVE)
+
+  tickets Ticket[] @relation("TicketServices", map: "ticket_services")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  ticket    Ticket   @relation(fields: [ticketId], references: [id])
 
   @@map("services")
 }
