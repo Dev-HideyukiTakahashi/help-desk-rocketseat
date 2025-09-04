@@ -8,58 +8,60 @@ export function Ticket() {
       <div className="border border-gray-500 rounded-lg overflow-hidden">
         <table className="w-full">
           <thead
-            className=" text-gray-400 font-lato font-bold text-base
-          border border-gray-500 text-left"
+            className="text-gray-400 font-lato font-bold text-base
+            border border-gray-500 text-left"
           >
             <tr>
-              <th className="p-4">Atualizado em</th>
-              <th className="p-4">Id</th>
-              <th className="p-4">Título e Serviço</th>
-              <th className="p-4">Valor total</th>
-              <th className="p-4">Cliente</th>
-              <th className="p-4">Técnico</th>
-              <th className="p-4">Status</th>
-              <th className="p-4"></th>
+              <th className="p-2 sm:p-4 text-sm">Atualizado em</th>
+              <th className="p-2 sm:p-4 hidden md:table-cell">Id</th>
+              <th className="p-2 sm:p-4 text-sm">Título e Serviço</th>
+              <th className="p-2 sm:p-4 hidden md:table-cell">Valor total</th>
+              <th className="p-2 sm:p-4 hidden md:table-cell">Cliente</th>
+              <th className="p-2 sm:p-4 hidden md:table-cell">Técnico</th>
+              <th className="p-2 sm:p-4 text-sm">Status</th>
+              <th className="p-2 sm:p-4"></th>
             </tr>
           </thead>
           <tbody className="border border-gray-500">
             <tr>
-              <td className="p-4 text-basefont-lato">13/04/25 20:56</td>
-              <td className="p-4 text-sm font-lato font-bold">00003</td>
-              <td className="p-4 text-sm font-lato">
-                <span className="font-bold"> Rede lenta</span>
-                <p>Instalação de Rede </p>
+              <td className="p-2 sm:p-4 text-xs sm:text-base font-lato">13/04/25 20:56</td>
+              <td className="p-2 sm:p-4 text-sm font-lato font-bold hidden md:table-cell">00003</td>
+              <td className="p-2 sm:p-4 text-xs sm:text-sm font-lato">
+                <span className="font-bold max-w-[60px] sm:max-w-none truncate"> Rede lenta</span>
+                <p className="text-xs sm:text-sm max-w-[60px] sm:max-w-none truncate">
+                  Instalação de Rede{' '}
+                </p>
               </td>
-              <td className="p-4 text-base font-lato">R$ 180,00</td>
-              <td className="p-4 font-lato">
-                <div className="flex items-center gap-2">
+              <td className="p-2 sm:p-4 text-base font-lato hidden md:table-cell">R$ 180,00</td>
+              <td className="p-2 sm:p-4 font-lato hidden md:table-cell">
+                <div className="flex items-center gap-1 sm:gap-2">
                   <span
                     className="bg-blue-dark p-1 
-                    font-lato text-sm text-gray-600
+                    font-lato text-xs text-gray-600
                     rounded-full flex justify-center items-center"
                   >
                     AC
                   </span>
-                  <p className="text-base">André Costa</p>
+                  <p className="text-xs sm:text-base">André Costa</p>
                 </div>
               </td>
-              <td className="p-4 font-lato">
-                <div className="flex items-center gap-2">
+              <td className="p-2 sm:p-4 font-lato hidden md:table-cell">
+                <div className="flex items-center gap-1 sm:gap-2">
                   <span
                     className="bg-blue-dark p-1 
-                    font-lato text-sm text-gray-600
+                    font-lato text-xs text-gray-600
                     rounded-full flex justify-center items-center"
                   >
                     CS
                   </span>
-                  <p className="text-base">Carlos Silva</p>
+                  <p className="text-xs sm:text-base hidden md:table-cell">Carlos Silva</p>
                 </div>
               </td>
-              <td className="p-4 text-base font-lato">
-                <TicketStatus status="Open" />
+              <td className="p-2 sm:p-4 text-xs sm:text-base font-lato">
+                <TicketStatus status="OPEN" />
               </td>
-              <td className="p-4">
-                <button className="bg-gray-500 p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark">
+              <td className="p-2 sm:p-4">
+                <button className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark">
                   <svg
                     width="16"
                     height="16"
