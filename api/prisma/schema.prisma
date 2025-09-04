@@ -24,66 +24,58 @@ enum Role {
   TECHNICIAN
 }
 
-model User {
+model Admin {
   id       String @id @default(uuid())
   email    String @unique
   password String
   name     String
 
-  role       Role
-  admin      Admin?
-  client     Client?
-  technician Technician?
-
-  @@map("users")
-}
-
-model Admin {
-  id     String @id @default(uuid())
-  userId String @unique
-
-  user User @relation(fields: [userId], references: [id])
+  role Role
 
   @@map("admins")
 }
 
 model Client {
-  id           String @id @default(uuid())
-  userId       String @unique
-  profilePhoto String
+  id           String  @id @default(uuid())
+  profilePhoto String?
+  email        String  @unique
+  password     String
+  name         String
+  role         Role
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user    User     @relation(fields: [userId], references: [id])
   tickets Ticket[]
 
   @@map("clients")
 }
 
 model Technician {
-  id           String @id @default(uuid())
-  userId       String @unique
-  profilePhoto String
+  id           String  @id @default(uuid())
+  profilePhoto String?
+  email        String  @unique
+  password     String
+  name         String
+  role         Role
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  user         User          @relation(fields: [userId], references: [id])
   tickets      Ticket[]
-  availability Availability?
+  availability Availability[]
 
   @@map("technicians")
 }
 
 model Availability {
   id           String   @id @default(uuid())
-  technicianId String   @unique
-  startTime    DateTime
-  endTime      DateTime
+  technicianId String
+  time         DateTime
 
   technician Technician @relation(fields: [technicianId], references: [id])
 
+  @@unique([technicianId, time]) // garante que um técnico não tenha horários duplicados
   @@map("availabilities")
 }
 

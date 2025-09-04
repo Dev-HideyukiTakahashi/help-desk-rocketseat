@@ -11,6 +11,7 @@ technicianRoutes.use(ensureAuthenticated);
 technicianRoutes.use(verifyAuthorization(['ADMIN']));
 
 // routes
+technicianRoutes.get('/', technicianController.index);
 technicianRoutes.post('/', technicianController.create);
 
 export { technicianRoutes };

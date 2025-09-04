@@ -11,4 +11,10 @@ export class TechnicianController {
 
     return response.status(201).json(technician);
   }
+
+  async index(request: Request, response: Response) {
+    const technicians = await technicianService.index();
+
+    return response.json(technicians);
+  }
 }

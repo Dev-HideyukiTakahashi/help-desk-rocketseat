@@ -7,7 +7,18 @@ import { AppError } from '../util/app-error';
 
 export class SessionService {
   async login(email: string, password: string) {
-    const data = await prisma.user.findUnique({ where: { email } });
+    let data: any = await prisma.admin.findUnique({ where: { email } });
+    let role = 'ADMIN';
+
+    if (!data) {
+      data = await prisma.client.findUnique({ where: { email } });
+      role = 'CLIENT';
+    }
+
+    if (!data) {
+      data = await prisma.technician.findUnique({ where: { email } });
+      role = 'TECHNICIAN';
+    }
 
     if (!data) {
       throw new AppError('Credenciais inválidas.');
@@ -19,7 +30,7 @@ export class SessionService {
     }
 
     const { secret, expiresIn } = authConfig.jwt;
-    const token = sign({ role: data.role ?? 'CLIENT' }, secret, {
+    const token = sign({ role }, secret, {
       subject: data.id,
       expiresIn,
     });
