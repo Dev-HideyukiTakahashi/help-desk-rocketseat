@@ -8,10 +8,14 @@ const technicianController = new TechnicianController();
 
 // middlewares
 technicianRoutes.use(ensureAuthenticated);
-technicianRoutes.use(verifyAuthorization(['ADMIN']));
 
 // routes
-technicianRoutes.get('/', technicianController.index);
-technicianRoutes.post('/', technicianController.create);
+technicianRoutes.get('/', verifyAuthorization(['ADMIN']), technicianController.index);
+technicianRoutes.post('/', verifyAuthorization(['ADMIN']), technicianController.create);
+technicianRoutes.put(
+  '/:id',
+  verifyAuthorization(['TECHNICIAN', 'ADMIN']),
+  technicianController.update,
+);
 
 export { technicianRoutes };
