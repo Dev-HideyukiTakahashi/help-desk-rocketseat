@@ -1,7 +1,6 @@
 import { hash } from 'bcrypt';
 import { prisma } from '../config/prisma-config';
-import { ClientDTO } from '../dto/client-dto';
-import { CreateClientPayload } from '../schema/client-schema';
+import { CreateClientPayload, responseClientSchema } from '../schema/client-schema';
 
 export class ClientService {
   async create(payload: CreateClientPayload) {
@@ -30,7 +29,7 @@ export class ClientService {
     };
 
     const { password: _, ...userWithoutPassword } = clientData;
-    const client = ClientDTO.parse(userWithoutPassword);
+    const client = responseClientSchema.parse(userWithoutPassword);
 
     return client;
   }

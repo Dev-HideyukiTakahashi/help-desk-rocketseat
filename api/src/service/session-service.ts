@@ -2,9 +2,8 @@ import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { authConfig } from '../config/auth-config';
 import { prisma } from '../config/prisma-config';
+import { responseUserSchema } from '../schema/user-schema';
 import { AppError } from '../util/app-error';
-
-import { UserDTO } from '../dto/user-dto';
 
 export class SessionService {
   async login(email: string, password: string) {
@@ -26,7 +25,7 @@ export class SessionService {
     });
 
     const { password: _, ...userWithoutPassword } = data;
-    const user = UserDTO.parse(userWithoutPassword);
+    const user = responseUserSchema.parse(userWithoutPassword);
 
     return { user, token };
   }

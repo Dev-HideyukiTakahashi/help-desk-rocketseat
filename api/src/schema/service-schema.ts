@@ -26,5 +26,3 @@ export const responseServiceSchema = z.object({
   value: z.coerce.number(),
   status: z.enum(['ACTIVE', 'INACTIVE']),
 });
-
-export type ResponseServicePayload = z.infer<typeof responseServiceSchema>;

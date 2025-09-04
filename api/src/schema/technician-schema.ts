@@ -1,4 +1,5 @@
 import z from 'zod';
+import { responseUserSchema } from './user-schema';
 
 export const createTechnicianSchema = z.object({
   email: z.email({ message: 'Informe um email válido' }),
@@ -8,3 +9,7 @@ export const createTechnicianSchema = z.object({
 });
 
 export type CreateTechnicianPayload = z.infer<typeof createTechnicianSchema>;
+
+export const responseTechnicianSchema = responseUserSchema.extend({
+  profilePhoto: z.string(),
+});

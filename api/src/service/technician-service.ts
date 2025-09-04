@@ -1,7 +1,6 @@
 import { hash } from 'bcrypt';
 import { prisma } from '../config/prisma-config';
-import { TechnicianDTO } from '../dto/technician-dto';
-import { CreateTechnicianPayload } from '../schema/technician-schema';
+import { CreateTechnicianPayload, responseTechnicianSchema } from '../schema/technician-schema';
 
 export class TechnicianService {
   async create(payload: CreateTechnicianPayload) {
@@ -30,7 +29,7 @@ export class TechnicianService {
     };
 
     const { password: _, ...userWithoutPassword } = technicianData;
-    const technician = TechnicianDTO.parse(userWithoutPassword);
+    const technician = responseTechnicianSchema.parse(userWithoutPassword);
 
     return technician;
   }
