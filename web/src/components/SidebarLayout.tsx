@@ -1,11 +1,38 @@
+import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router';
 import LogoIconSvg from '../assets/img/Logo_IconLight.svg';
 import { useAuth } from '../hooks/useAuth';
 import { getInitials } from '../utils/get-name-initials';
 import { translateRole } from '../utils/translate-role';
+import { ProfileMenu } from './ProfileMenu';
 
 export function SidebarLayout() {
   const { session, remove } = useAuth();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
+  const profileMenuRef = useRef<HTMLDivElement>(null);
+  const profileButtonRef = useRef<HTMLDivElement>(null);
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target as Node) &&
+        profileButtonRef.current &&
+        !profileButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileMenuRef, profileButtonRef]);
 
   return (
     <>
@@ -150,7 +177,11 @@ export function SidebarLayout() {
             </NavLink>
           )}
         </nav>
-        <footer className="border-t-1 border-gray-200 flex gap-3 mt-auto p-5">
+        <footer
+          className="border-t-1 border-gray-200 flex gap-3 mt-auto p-5 cursor-pointer"
+          ref={profileButtonRef}
+          onClick={toggleProfileMenu}
+        >
           <div
             className="bg-blue-dark w-[32px] h-[32px] text-gray-600  
             rounded-2xl flex items-center justify-center"
@@ -161,6 +192,12 @@ export function SidebarLayout() {
             <h1 className="text-gray-600 font-lato text-sm">{session?.user.name}</h1>
             <p className="text-gray-400 font-lato text-xs">{session?.user.email}</p>
           </div>
+
+          {isProfileMenuOpen && (
+            <div ref={profileMenuRef} className="absolute bottom-[60px]">
+              <ProfileMenu isOpen={isProfileMenuOpen} onClose={toggleProfileMenu} />
+            </div>
+          )}
         </footer>
       </aside>
     </>

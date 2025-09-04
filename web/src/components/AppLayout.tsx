@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router';
-import CircleUserSVG from '../assets/icons/circle-user.svg';
-import LogoutSVG from '../assets/icons/log-out.svg';
 import MenuSvg from '../assets/icons/menu.svg';
 import CloseSvg from '../assets/icons/x.svg';
 import LogoIconSvg from '../assets/img/Logo_IconLight.svg';
@@ -9,13 +6,14 @@ import { useAuth } from '../hooks/useAuth';
 import { getInitials } from '../utils/get-name-initials';
 import { translateRole } from '../utils/translate-role';
 import { MainLayout } from './MainLayout';
+import { ProfileMenu } from './ProfileMenu';
 import { SidebarLayout } from './SidebarLayout';
 import { SidebarMobileLayout } from './SidebarMobileLayout';
 
 export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const { session, remove } = useAuth();
+  const { session } = useAuth();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const profileMenuRef = useRef<HTMLDivElement>(null);
@@ -92,26 +90,8 @@ export function AppLayout() {
             {getInitials(session?.user.name)}
           </div>
           {isProfileMenuOpen && (
-            <div
-              ref={profileMenuRef}
-              className="absolute right-0 top-full mt-2 w-40 bg-gray-100 rounded-md shadow-lg z-50 py-5"
-            >
-              <div className="text-gray-400 font-bold text-xs font-lato p-4 border-b border-gray-300">
-                Opções
-              </div>
-              <Link to={'/'} className="text-gray-600 text-xs font-lato flex gap-2 mt-4 ml-3">
-                <img src={CircleUserSVG} alt="profile-icon" className="w-[20px] h-[20px]" />
-                <span className="text-sm font-lato">Perfil</span>
-              </Link>
-              <button
-                onClick={() => {
-                  remove();
-                }}
-                className="ml-3 text-feedback-danger text-sm font-lato flex items-center gap-2 mt-5"
-              >
-                <img src={LogoutSVG} alt="logout-icon" className="w-[20px] h-[20px]" />
-                <p>Sair</p>
-              </button>
+            <div ref={profileMenuRef}>
+              <ProfileMenu isOpen={isProfileMenuOpen} onClose={toggleProfileMenu} />
             </div>
           )}
         </div>
