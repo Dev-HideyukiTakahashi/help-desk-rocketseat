@@ -1,18 +1,36 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { AdminDashbordButton } from '../../components/AdminDashbordButton';
+import { Pagination } from '../../components/Pagination';
 import { ServiceButton } from '../../components/ServiceButton';
 import { ServiceModal } from '../../components/ServiceModal';
 import { ServiceStatus } from '../../components/ServiceStatus';
 import { api } from '../../services/api';
 
+const PER_PAGE = 8;
+
 export function Service() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [services, setServices] = useState<ServiceAPIResponse[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalOfPage, setTotalOfPage] = useState(0);
 
-  function handleServiceButtonClick() {
-    console.log('oi');
+  async function handleToggleServiceStatus(id: string, currentStatus: 'ACTIVE' | 'INACTIVE') {
+    const originalServices = [...services];
+    const updatedStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+
+    try {
+      await api.put(`/services/${id}`, { status: updatedStatus });
+
+      setError(null);
+      fetchServices();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setServices(originalServices);
+        setError(error.response?.data.message || 'Erro ao atualizar o status.');
+      }
+    }
   }
 
   function handleOpenServiceModal() {
@@ -20,14 +38,22 @@ export function Service() {
   }
 
   function handleCloseServiceModal() {
+    fetchServices();
     setIsModalOpen(false);
   }
 
   async function fetchServices() {
     try {
-      const { data } = await api.get<ServiceAPIResponse[]>('/services');
+      const { data } = await api.get<ServiceAPIResponse>('/services', {
+        params: {
+          page,
+          perPage: PER_PAGE,
+        },
+      });
 
-      setServices(data);
+      setTotalOfPage(data.pagination.totalPages);
+      setServices(data.services);
+      setError(null);
     } catch (error) {
       if (error instanceof AxiosError) {
         setError(error.response?.data.message || 'Erro ao carregar serviços.');
@@ -35,9 +61,21 @@ export function Service() {
     }
   }
 
+  function handlePagination(action: 'next' | 'previous') {
+    setPage((prevPage) => {
+      if (action === 'next' && prevPage < totalOfPage) {
+        return prevPage + 1;
+      }
+      if (action === 'previous' && prevPage > 1) {
+        return prevPage - 1;
+      }
+      return prevPage;
+    });
+  }
+
   useEffect(() => {
     fetchServices();
-  }, [services]);
+  }, [page]);
 
   return (
     <>
@@ -74,7 +112,10 @@ export function Service() {
                 </td>
                 <td className="p-2 sm:p-4">
                   <div className="flex justify-end gap-2">
-                    <ServiceButton status={service.status} onClick={handleServiceButtonClick} />
+                    <ServiceButton
+                      status={service.status}
+                      onClick={() => handleToggleServiceStatus(service.id, service.status)}
+                    />
                     <button className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark">
                       <svg
                         width="16"
@@ -98,6 +139,12 @@ export function Service() {
           </tbody>
         </table>
       </div>
+      <Pagination
+        current={page}
+        total={totalOfPage}
+        onNext={() => handlePagination('next')}
+        onPrevious={() => handlePagination('previous')}
+      />
       <ServiceModal isOpen={isModalOpen} onClose={handleCloseServiceModal} />
     </>
   );

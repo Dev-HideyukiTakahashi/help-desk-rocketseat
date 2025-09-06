@@ -24,10 +24,28 @@ export class ServiceService {
     return responseServiceSchema.parse(data);
   }
 
-  async index() {
+  async index(page: number, perPage: number) {
     const responseServiceArraySchema = z.array(responseServiceSchema);
-    const data = await prisma.service.findMany();
 
-    return responseServiceArraySchema.parse(data);
+    const skip = (page - 1) * perPage;
+
+    const data = await prisma.service.findMany({
+      skip,
+      take: perPage,
+      orderBy: { createdAt: 'asc' },
+    });
+
+    const totalRecords = await prisma.service.count();
+    const totalPages = Math.ceil(totalRecords / perPage);
+    const pagination = {
+      page,
+      perPage,
+      totalRecords,
+      totalPages: totalPages > 0 ? totalPages : 1,
+    };
+
+    const services = responseServiceArraySchema.parse(data);
+
+    return { services, pagination };
   }
 }
