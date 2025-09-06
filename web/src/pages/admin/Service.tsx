@@ -15,6 +15,8 @@ export function Service() {
   const [services, setServices] = useState<Service[]>([]);
   const [page, setPage] = useState(1);
   const [totalOfPage, setTotalOfPage] = useState(0);
+  const [isAddService, setIsAddService] = useState(true);
+  const [updatedService, setUpdatedService] = useState<Service | undefined>(undefined);
 
   async function handleToggleServiceStatus(id: string, currentStatus: 'ACTIVE' | 'INACTIVE') {
     const originalServices = [...services];
@@ -34,12 +36,19 @@ export function Service() {
   }
 
   function handleOpenServiceModal() {
+    setIsAddService(true);
     setIsModalOpen(true);
   }
 
   function handleCloseServiceModal() {
-    fetchServices();
     setIsModalOpen(false);
+    fetchServices();
+  }
+
+  function handleEditServiceModal(editService: Service) {
+    setUpdatedService(editService);
+    setIsAddService(false);
+    setIsModalOpen(true);
   }
 
   async function fetchServices() {
@@ -116,7 +125,10 @@ export function Service() {
                       status={service.status}
                       onClick={() => handleToggleServiceStatus(service.id, service.status)}
                     />
-                    <button className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark">
+                    <button
+                      onClick={() => handleEditServiceModal(service)}
+                      className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark"
+                    >
                       <svg
                         width="16"
                         height="16"
@@ -145,7 +157,12 @@ export function Service() {
         onNext={() => handlePagination('next')}
         onPrevious={() => handlePagination('previous')}
       />
-      <ServiceModal isOpen={isModalOpen} onClose={handleCloseServiceModal} />
+      <ServiceModal
+        isOpen={isModalOpen}
+        onClose={handleCloseServiceModal}
+        isAddService={isAddService}
+        service={updatedService}
+      />
     </>
   );
 }
