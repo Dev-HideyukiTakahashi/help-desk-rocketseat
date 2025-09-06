@@ -1,13 +1,16 @@
-type Props = {
+import type { ComponentProps } from 'react';
+
+type Props = ComponentProps<'button'> & {
   status: 'ACTIVE' | 'INACTIVE';
 };
 
-export function ServiceButton({ status }: Props) {
-  if (status === 'INACTIVE') {
+export function ServiceButton({ status, ...rest }: Props) {
+  if (status === 'ACTIVE') {
     return (
-      <div
-        className="p-2 md:p-2 md:px-4 w-fit 
-      flex items-center gap-1 sm:gap-2 text-gray-300 "
+      <button
+        className="p-2 md:p-2 md:px-4 w-fit cursor-pointer
+        flex items-center gap-1 sm:gap-2 text-gray-300 "
+        {...rest}
       >
         <svg
           width="18"
@@ -23,15 +26,16 @@ export function ServiceButton({ status }: Props) {
         </svg>
 
         <span className="font-lato font-bold text-sm hidden sm:inline">Desativar</span>
-      </div>
+      </button>
     );
   }
 
-  if (status === 'ACTIVE') {
+  if (status === 'INACTIVE') {
     return (
-      <div
-        className="p-2 md:p-2 md:px-4 w-fit 
-      flex items-center gap-1 sm:gap-2 text-gray-300 "
+      <button
+        className="p-2 md:p-2 md:px-4 w-fit cursor-pointer
+        flex items-center gap-1 sm:gap-2 text-gray-300 "
+        {...rest}
       >
         <svg
           width="18"
@@ -47,7 +51,7 @@ export function ServiceButton({ status }: Props) {
         </svg>
 
         <span className="font-lato font-bold text-sm hidden sm:inline">Ativar</span>
-      </div>
+      </button>
     );
   }
 }

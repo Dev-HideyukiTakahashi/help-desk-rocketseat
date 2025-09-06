@@ -19,10 +19,16 @@ export function Input({ legend, type = 'text', placeholder, ...rest }: Props) {
       <input
         type={type}
         placeholder={placeholder}
-        className="h-[40px] border-b border-gray-400
-          focus:border-blue-base outline-none
-          transition-colors duration-200
-          placeholder:text-sm placeholder:font-lato placeholder:text-gray-400"
+        className={`h-[40px] border-b border-gray-400
+        focus:border-blue-base outline-none
+        transition-colors duration-200
+        placeholder:text-sm placeholder:font-lato placeholder:text-gray-400
+        ${
+          type === 'number'
+            ? 'appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+            : ''
+        }
+        `}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
         {...rest}
