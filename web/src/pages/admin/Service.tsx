@@ -95,28 +95,31 @@ export function Service() {
 
       {error && <p className="text-feedback-danger mb-3 font-lato text-sm">{error}</p>}
 
-      <div className="border border-gray-500 rounded-lg overflow-hidden">
-        <table className="w-full table-auto">
+      <div className="rounded-lg overflow-hidden">
+        <table className="w-full table-fixed">
           <thead
             className="text-gray-400 font-lato font-bold text-base
                   border border-gray-500 text-left"
           >
             <tr>
-              <th className="p-2 sm:p-4 text-sm">Titulo</th>
-              <th className="p-2 sm:p-4 text-sm">Valor</th>
-              <th className="p-2 sm:p-4 text-sm md:flex md:justify-end md:mr-7">Status</th>
+              <th className="p-2 md:w-1/3 sm:p-4 text-sm">Titulo</th>
+              <th className="p-2 md:w-1/3 sm:p-4 text-sm text-center">Valor</th>
+              <th className="p-2 md:w-1/3 sm:p-4 text-sm text-center md:text-right">
+                Status <span className="hidden md:inline text-gray-600">A.</span>
+              </th>
+              <th className="md:w-[180px] p-4"></th>
             </tr>
           </thead>
-          <tbody className="border border-gray-500 font-lato">
+          <tbody className="font-lato">
             {services.map((service) => (
-              <tr key={service.id}>
-                <td className="p-2 sm:p-4 text-xs sm:text-base max-w-[70px] sm:max-w-none truncate">
+              <tr key={service.id} className="border border-gray-500">
+                <td className="p-2 sm:p-4 font-bold text-sm max-w-[70px] sm:max-w-none truncate">
                   {service.title}
                 </td>
-                <td className="p-2 sm:p-4 text-xs sm:text-base">
+                <td className="p-2 sm:p-4 text-sm text-center">
                   R$ {service.value.toFixed(2).replace('.', ',')}
                 </td>
-                <td className="p-2 sm:p-4 text-xs sm:text-base flex justify-end">
+                <td className="p-2 sm:p-4 text-sm flex mt-2 justify-center md:justify-end">
                   <ServiceStatus status={service.status} />
                 </td>
                 <td className="p-2 sm:p-4">

@@ -25,7 +25,7 @@ export function ServiceButton({ status, ...rest }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Desativar</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Desativar</span>
       </button>
     );
   }
@@ -50,7 +50,7 @@ export function ServiceButton({ status, ...rest }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Ativar</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Ativar</span>
       </button>
     );
   }

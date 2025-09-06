@@ -6,12 +6,12 @@ export function ServiceStatus({ status }: Props) {
   if (status === 'INACTIVE') {
     return (
       <div
-        className="bg-[#f0d4dd] rounded-full p-2 md:p-2 md:px-4 w-fit 
-      flex items-center gap-1 sm:gap-2 text-feedback-open"
+        className="bg-[#f0d4dd] rounded-full p-1 md:p-2 md:px-4
+        text-feedback-open w-fit"
       >
         <svg
-          width="18"
-          height="18"
+          width="16"
+          height="16"
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@ export function ServiceStatus({ status }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Inativo</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Inativo</span>
       </div>
     );
   }
@@ -31,12 +31,12 @@ export function ServiceStatus({ status }: Props) {
   if (status === 'ACTIVE') {
     return (
       <div
-        className="bg-[#d7e4d0] rounded-full p-2 md:p-2 md:px-4 w-fit 
-      flex items-center gap-1 sm:gap-2 text-feedback-done "
+        className="bg-[#d7e4d0] rounded-full p-1 md:p-2 md:px-4  
+      text-feedback-done w-fit"
       >
         <svg
-          width="18"
-          height="18"
+          width="16"
+          height="16"
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ export function ServiceStatus({ status }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Ativo</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Ativo</span>
       </div>
     );
   }
