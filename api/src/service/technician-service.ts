@@ -63,17 +63,34 @@ export class TechnicianService {
     return technician;
   }
 
-  async index() {
+  async index(page: number, perPage: number) {
     const responseTechnicianArraySchema = z.array(responseTechnicianSchema);
+
+    const skip = (page - 1) * perPage;
+
     const data = await prisma.technician.findMany({
+      skip,
+      take: perPage,
+      orderBy: { createdAt: 'asc' },
       include: { availability: true },
     });
 
-    const technicians = data.map((tech) => ({
+    const totalRecords = await prisma.technician.count();
+    const totalPages = Math.ceil(totalRecords / perPage);
+    const pagination = {
+      page,
+      perPage,
+      totalRecords,
+      totalPages: totalPages > 0 ? totalPages : 1,
+    };
+
+    const list = data.map((tech) => ({
       ...tech,
       availability: tech.availability.map((a) => a.time),
     }));
 
-    return responseTechnicianArraySchema.parse(technicians);
+    const technicians = responseTechnicianArraySchema.parse(list);
+
+    return { technicians, pagination };
   }
 }

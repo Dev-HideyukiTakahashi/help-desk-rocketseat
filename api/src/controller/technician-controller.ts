@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { paginationSchema } from '../schema/pagination-schema';
 import { createTechnicianSchema, updateTechnicianSchema } from '../schema/technician-schema';
 import { TechnicianService } from '../service/technician-service';
 
@@ -20,7 +21,8 @@ export class TechnicianController {
   }
 
   async index(request: Request, response: Response) {
-    const technicians = await technicianService.index();
+    const { page, perPage } = paginationSchema.parse(request.query);
+    const technicians = await technicianService.index(page, perPage);
 
     return response.json(technicians);
   }
