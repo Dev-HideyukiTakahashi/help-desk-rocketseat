@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from '../components/AppLayout';
+import { TechnicianForm } from '../components/TechnicianForm';
 import { Client } from '../pages/admin/Client';
 import { Service } from '../pages/admin/Service';
 import { Technician } from '../pages/admin/Technician';
@@ -12,6 +13,7 @@ export function AdminRoutes() {
       <Route path="/" element={<AppLayout />}>
         <Route path="/" element={<Ticket />} />
         <Route path="/technicians" element={<Technician />} />
+        <Route path="/technicians/:mode" element={<TechnicianForm />} />
         <Route path="/clients" element={<Client />} />
         <Route path="/services" element={<Service />} />
       </Route>

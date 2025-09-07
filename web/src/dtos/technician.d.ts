@@ -3,7 +3,7 @@ type Technician = {
   email: string;
   name: string;
   role: string;
-  availability: Date[];
+  availability: string[];
 };
 
 type TechnicianAPIResponse = {
@@ -14,4 +14,11 @@ type TechnicianAPIResponse = {
     totalRecords: number;
     totalPages: number;
   };
+};
+
+type TechnicianAPIRequest = {
+  id?: string;
+  email: string;
+  name: string;
+  availability: string[];
 };

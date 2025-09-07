@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AdminDashbordButton } from '../../components/AdminDashbordButton';
 import { Pagination } from '../../components/Pagination';
 import { api } from '../../services/api';
@@ -8,6 +9,8 @@ import { getInitials } from '../../utils/get-name-initials';
 const PER_PAGE = 8;
 
 export function Technician() {
+  const navigate = useNavigate();
+
   const [page, setPage] = useState(1);
   const [totalOfPage, setTotalOfPage] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -26,8 +29,6 @@ export function Technician() {
       return prevPage;
     });
   }
-
-  function handleEditTechnicianModal(technician: Technician) {}
 
   async function fetchTechnicians() {
     try {
@@ -48,16 +49,6 @@ export function Technician() {
     }
   }
 
-  function handleOpenTechnicianModal() {
-    setIsAddTechnicians(true);
-    setIsModalOpen(true);
-  }
-
-  function handleCloseTechnicianModal() {
-    setIsModalOpen(false);
-    fetchTechnicians();
-  }
-
   useEffect(() => {
     fetchTechnicians();
   }, [page]);
@@ -65,7 +56,7 @@ export function Technician() {
     <>
       <div className="flex place-content-between mb-7">
         <h1 className="text-blue-dark font-lato font-bold text-2xl">Técnicos</h1>
-        <AdminDashbordButton onClick={handleOpenTechnicianModal}>Novo</AdminDashbordButton>
+        <AdminDashbordButton onClick={() => navigate('/technicians/new')}>Novo</AdminDashbordButton>
       </div>
 
       {error && <p className="text-feedback-danger mb-3 font-lato text-sm">{error}</p>}
@@ -93,7 +84,7 @@ export function Technician() {
                     <span
                       className="bg-blue-dark p-1 
                       font-lato text-xs text-gray-600
-                      rounded-full flex justify-center items-center"
+                      rounded-full flex justify-center items-center w-[28px] h-[28px]"
                     >
                       {getInitials(technician.name)}
                     </span>
@@ -105,15 +96,12 @@ export function Technician() {
                 </td>
                 <td className="p-2 sm:p-4 text-xs">
                   <div className="flex flex-wrap gap-1 md:justify-end">
-                    {technician.availability.slice(0, 1).map((date, index) => (
+                    {technician.availability.slice(0, 1).map((iso, index) => (
                       <span
                         key={index}
                         className="text-gray-400 px-2 py-1 rounded-full border-1 border-gray-400  text-xs md:hidden"
                       >
-                        {new Date(date).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        {iso.slice(11, 16)}
                       </span>
                     ))}
                     {technician.availability.length > 1 && (
@@ -121,15 +109,12 @@ export function Technician() {
                         +{technician.availability.length - 1}
                       </span>
                     )}
-                    {technician.availability.slice(0, 5).map((date, index) => (
+                    {technician.availability.slice(0, 5).map((iso, index) => (
                       <span
                         key={index}
                         className="text-gray-400 px-2 py-1 rounded-full border-1 border-gray-400 text-xs hidden md:inline-block"
                       >
-                        {new Date(date).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                        {iso.slice(11, 16)}
                       </span>
                     ))}
                     {technician.availability.length > 5 && (
@@ -142,7 +127,7 @@ export function Technician() {
                 <td className="p-2 sm:p-4">
                   <div className="flex justify-end gap-2">
                     <button
-                      onClick={() => handleEditTechnicianModal(technician)}
+                      onClick={() => navigate('/technicians/edit', { state: technician })}
                       className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark"
                     >
                       <svg
