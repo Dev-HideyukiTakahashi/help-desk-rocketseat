@@ -88,7 +88,7 @@ export function Service() {
 
   return (
     <>
-      <div className="flex place-content-between mb-7">
+      <div className="flex place-content-between mb-7 items-center">
         <h1 className="text-blue-dark font-lato font-bold text-2xl ">Serviços</h1>
         <AdminDashbordButton onClick={handleOpenServiceModal}>Novo</AdminDashbordButton>
       </div>
