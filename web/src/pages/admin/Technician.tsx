@@ -15,8 +15,6 @@ export function Technician() {
   const [totalOfPage, setTotalOfPage] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [technicians, setTechnicians] = useState<Technician[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAddTechnicians, setIsAddTechnicians] = useState(true);
 
   function handlePagination(action: 'next' | 'previous') {
     setPage((prevPage) => {
