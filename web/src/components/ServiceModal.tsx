@@ -53,7 +53,7 @@ export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) 
       setTitle('');
       setValue('');
       setError('');
-      onClose();
+      handleClose();
     } catch (error) {
       if (error instanceof AxiosError) {
         setError(
@@ -66,10 +66,15 @@ export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) 
     }
   }
 
+  function handleClose() {
+    setError('');
+    onClose();
+  }
+
   return (
     <div
       className="fixed inset-0 bg-black/50 flex justify-center items-center p-4 z-50"
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className="bg-gray-600 w-[440px] h-[390px] rounded-lg shadow-xl flex flex-col"
@@ -86,7 +91,7 @@ export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) 
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="cursor-pointer text-gray-300"
-            onClick={onClose}
+            onClick={handleClose}
           >
             <path
               fillRule="evenodd"
@@ -115,10 +120,10 @@ export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) 
               onChange={(e) => setValue(e.target.value)}
             />
           </main>
-          <footer className="flex flex-col items-center p-7 border-t border-gray-500">
+          <footer className="flex flex-col items-center p-3 border-t border-gray-500">
             <Button type="submit">Salvar</Button>
-            <div className="min-h-[24px] mt-1">
-              {error && <p className="font-lato text-sm text-feedback-danger">{error}</p>}
+            <div className="min-h-[24px] mt-2">
+              {error && <p className="font-lato text-sm text-feedback-danger shake">{error}</p>}
             </div>
           </footer>
         </form>
