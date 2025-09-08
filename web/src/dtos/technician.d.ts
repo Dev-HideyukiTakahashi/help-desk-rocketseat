@@ -20,5 +20,6 @@ type TechnicianAPIRequest = {
   id?: string;
   email: string;
   name: string;
+  profilePhoto?: string;
   availability: string[];
 };
