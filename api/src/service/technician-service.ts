@@ -19,6 +19,7 @@ export class TechnicianService {
         password: hashedPassword,
         name,
         role: 'TECHNICIAN',
+        profilePhoto: '',
         availability: {
           create: availability.map((time) => ({ time })), // cria vários horários
         },
@@ -88,7 +89,6 @@ export class TechnicianService {
       ...tech,
       availability: tech.availability.map((a) => a.time),
     }));
-
     const technicians = responseTechnicianArraySchema.parse(list);
 
     return { technicians, pagination };
