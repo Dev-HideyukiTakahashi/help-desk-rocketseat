@@ -15,7 +15,7 @@ export function verifyAuthorization(role: string[]) {
       const { id } = request.params;
 
       if (request.user.id !== id) {
-        throw new AppError('Você só pode alterar os seus próprios dados.', 403);
+        throw new AppError('Você só pode acessar seus próprios dados.', 403);
       }
     }
 

@@ -12,5 +12,7 @@ clientRoutes.post('/', clientController.create);
 // rotas autenticadas
 clientRoutes.use(ensureAuthenticated);
 clientRoutes.put('/:id', verifyAuthorization(['ADMIN', 'CLIENT']), clientController.update);
+clientRoutes.get('/', verifyAuthorization(['ADMIN']), clientController.index);
+clientRoutes.get('/:id', verifyAuthorization(['ADMIN', 'CLIENT']), clientController.show);
 
 export { clientRoutes };
