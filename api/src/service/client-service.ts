@@ -24,8 +24,7 @@ export class ClientService {
       },
     });
 
-    const { password: _, ...userWithoutPassword } = data;
-    const client = responseClientSchema.parse(userWithoutPassword);
+    const client = responseClientSchema.parse(data);
 
     return client;
   }
@@ -44,8 +43,7 @@ export class ClientService {
       },
     });
 
-    const { password: _, ...userWithoutPassword } = data;
-    const client = responseClientSchema.parse(userWithoutPassword);
+    const client = responseClientSchema.parse(data);
 
     return client;
   }
@@ -84,8 +82,14 @@ export class ClientService {
       throw new AppError('Cliente não localizado', 404);
     }
 
-    const { password: _, ...userWithoutPassword } = data;
+    const client = responseClientSchema.parse(data);
 
-    return userWithoutPassword;
+    return client;
+  }
+
+  async delete(id: string) {
+    await prisma.client.delete({
+      where: { id },
+    });
   }
 }

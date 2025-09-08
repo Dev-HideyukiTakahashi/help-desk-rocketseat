@@ -34,4 +34,11 @@ export class ClientController {
 
     return response.json(client);
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+    await clientService.delete(id);
+
+    return response.sendStatus(204);
+  }
 }

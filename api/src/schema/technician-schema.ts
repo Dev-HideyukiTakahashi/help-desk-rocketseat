@@ -24,5 +24,6 @@ export const responseTechnicianSchema = z.object({
   email: z.email(),
   name: z.string(),
   role: z.string(),
+  profilePhoto: z.string().optional(),
   availability: z.array(z.coerce.date()),
 });
