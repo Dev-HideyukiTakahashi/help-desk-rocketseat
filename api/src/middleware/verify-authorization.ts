@@ -11,6 +11,14 @@ export function verifyAuthorization(role: string[]) {
       throw new AppError('Acesso negado. Você não tem permissão para realizar esta ação.', 403);
     }
 
+    if (request.user.role !== 'ADMIN') {
+      const { id } = request.params;
+
+      if (request.user.id !== id) {
+        throw new AppError('Você só pode alterar os seus próprios dados.', 403);
+      }
+    }
+
     return next();
   };
 }
