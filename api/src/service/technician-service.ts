@@ -49,7 +49,7 @@ export class TechnicianService {
         profilePhoto: profilePhoto ?? '',
         availability: {
           deleteMany: {},
-          create: availability.map((time) => ({ time })),
+          create: availability.sort((a, b) => a.getTime() - b.getTime()).map((time) => ({ time })),
         },
       },
       include: { availability: true },
