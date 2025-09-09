@@ -1,19 +1,24 @@
 import z from 'zod';
 import { prisma } from '../config/prisma-config';
 import { CreateTicketPayload, responseTicketSchema } from '../schema/ticket-schema';
+import { AppError } from '../util/app-error';
 import { getTechnicianWithLessOpenTickets } from '../util/assign-technician';
 import { normalizeTickets } from '../util/normalize-ticket';
 
 export class TicketService {
-  async create(payload: CreateTicketPayload) {
-    const { title, description, clientId, services } = payload;
+  async create(payload: CreateTicketPayload, user: any) {
+    if (user.role !== 'CLIENT') {
+      throw new AppError('Apenas clientes podem criar chamados', 403);
+    }
+
+    const { title, description, services } = payload;
     const technicianId = await getTechnicianWithLessOpenTickets();
 
     const data = await prisma.ticket.create({
       data: {
         title,
         description,
-        client: { connect: { id: clientId } },
+        client: { connect: { id: user.id } },
         technician: { connect: { id: technicianId } },
         services: { connect: services.map((serviceId: string) => ({ id: serviceId })) },
       },

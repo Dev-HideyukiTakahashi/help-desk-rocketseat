@@ -3,7 +3,6 @@ import z from 'zod';
 export const createTicketSchema = z.object({
   title: z.string().min(3, 'Título deve ter pelo menos 3 caracteres'),
   description: z.string().min(5, 'Descrição deve ter pelo menos 5 caracteres'),
-  clientId: z.uuid('Id do client inválido'),
   services: z
     .array(z.uuid('Id do serviço inválido'))
     .min(1, 'É necessário selecionar ao menos um serviço')
