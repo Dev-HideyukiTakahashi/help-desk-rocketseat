@@ -13,9 +13,10 @@ export const createTicketSchema = z.object({
 export type CreateTicketPayload = z.infer<typeof createTicketSchema>;
 
 export const responseTicketSchema = z.object({
-  id: z.uuid(),
+  id: z.number(),
   title: z.string(),
   description: z.string(),
+  initialCost: z.number(),
   client: z.object({
     id: z.uuid(),
     name: z.string(),
@@ -28,7 +29,10 @@ export const responseTicketSchema = z.object({
     z.object({
       id: z.uuid(),
       title: z.string(),
+      value: z.number(),
     }),
   ),
   status: z.enum(['OPEN', 'PROCESSING', 'CLOSED']),
+  createdAt: z.date(),
+  updatedAt: z.date(),
 });

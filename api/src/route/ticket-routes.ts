@@ -10,5 +10,6 @@ const ticketController = new TicketController();
 ticketRoutes.use(ensureAuthenticated);
 
 ticketRoutes.post('/', verifyAuthorization(['CLIENT']), ticketController.create);
+ticketRoutes.get('/', ticketController.index);
 
 export { ticketRoutes };

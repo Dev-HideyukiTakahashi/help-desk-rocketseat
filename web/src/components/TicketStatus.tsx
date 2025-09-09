@@ -6,7 +6,7 @@ export function TicketStatus({ status }: Props) {
   if (status === 'OPEN') {
     return (
       <div
-        className="bg-[#f0d4dd] rounded-full p-2 w-fit 
+        className="bg-[#f0d4dd] rounded-full p-1 md:p-2 w-fit 
       flex items-center gap-1 sm:gap-2 text-feedback-open "
       >
         <svg
@@ -24,7 +24,7 @@ export function TicketStatus({ status }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Aberto</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Aberto</span>
       </div>
     );
   }
@@ -32,8 +32,8 @@ export function TicketStatus({ status }: Props) {
   if (status === 'PROCESSING') {
     return (
       <div
-        className="bg-[#d2dbef] rounded-full p-2 w-fit 
-      flex items-center gap-1 sm:gap-2 text-feedback-progress "
+        className="bg-[#d2dbef] rounded-full p-1 md:p-2 w-fit 
+      flex items-center gap-1 sm:gap-2 text-feedback-progress"
       >
         <svg
           width="18"
@@ -50,7 +50,7 @@ export function TicketStatus({ status }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Em atendimento</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Em atendimento</span>
       </div>
     );
   }
@@ -58,7 +58,7 @@ export function TicketStatus({ status }: Props) {
   if (status === 'CLOSED') {
     return (
       <div
-        className="bg-[#d7e4d0] rounded-full p-2 w-fit 
+        className="bg-[#d7e4d0] rounded-full p-1 md:p-2 w-fit 
       flex items-center gap-1 sm:gap-2 text-feedback-done "
       >
         <svg
@@ -76,7 +76,7 @@ export function TicketStatus({ status }: Props) {
           />
         </svg>
 
-        <span className="font-lato font-bold text-sm hidden sm:inline">Encerrado</span>
+        <span className="font-lato font-bold text-xs hidden sm:inline">Encerrado</span>
       </div>
     );
   }

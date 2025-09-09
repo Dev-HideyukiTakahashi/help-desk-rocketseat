@@ -80,7 +80,7 @@ model Availability {
 }
 
 model Ticket {
-  id           String  @id @default(uuid())
+  id           Int     @id @default(autoincrement())
   title        String
   description  String
   clientId     String
