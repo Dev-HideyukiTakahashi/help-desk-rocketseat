@@ -11,7 +11,8 @@ export function verifyAuthorization(role: string[]) {
       throw new AppError('Acesso negado. Você não tem permissão para realizar esta ação.', 403);
     }
 
-    if (request.user.role !== 'ADMIN') {
+    if (request.user.role !== 'ADMIN' && request.params.id) {
+      console.log(request.params);
       const { id } = request.params;
 
       if (request.user.id !== id) {
