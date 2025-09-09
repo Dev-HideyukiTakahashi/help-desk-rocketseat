@@ -9,7 +9,7 @@ type Props = {
 };
 
 export function ProfileMenu({ isOpen, onClose }: Props) {
-  const { remove } = useAuth();
+  const { remove, session } = useAuth();
 
   if (!isOpen) {
     return null;
@@ -24,14 +24,17 @@ export function ProfileMenu({ isOpen, onClose }: Props) {
       <div className="text-gray-400 font-bold text-xs font-lato p-4 border-b border-gray-300">
         Opções
       </div>
-      <Link
-        to={'/'}
-        className="text-gray-600 text-xs font-lato flex items-center gap-2 mt-4 p-3 
+      {session?.user.role !== 'ADMIN' && (
+        <Link
+          to={'/'}
+          className="text-gray-600 text-xs font-lato flex items-center gap-2 mt-4 p-3 
         hover:bg-blue-dark hover:rounded-sm"
-      >
-        <img src={CircleUserSVG} alt="profile-icon" className="w-[20px] h-[20px]" />
-        <span className="text-sm font-lato">Perfil</span>
-      </Link>
+        >
+          <img src={CircleUserSVG} alt="profile-icon" className="w-[20px] h-[20px]" />
+          <span className="text-sm font-lato">Perfil</span>
+        </Link>
+      )}
+
       <button
         onClick={() => {
           remove();
