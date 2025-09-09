@@ -90,7 +90,7 @@ model Ticket {
   services Service[] @relation("TicketServices", map: "ticket_services")
 
   status     TicketStatus @default(OPEN)
-  client     Client       @relation(fields: [clientId], references: [id])
+  client     Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
   technician Technician   @relation(fields: [technicianId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
