@@ -5,3 +5,8 @@ export const generateTimes = (start: number, end: number) => {
   }
   return times;
 };
+
+export const defaultAvailability = [
+  ...generateTimes(8, 11), // manhã
+  ...generateTimes(14, 17), // tarde
+];

@@ -3,7 +3,7 @@ import { useActionState, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import z, { ZodError } from 'zod';
 import { api } from '../services/api';
-import { generateTimes } from '../utils/generate-time';
+import { defaultAvailability, generateTimes } from '../utils/generate-time';
 import { getInitials } from '../utils/get-name-initials';
 import { Button } from './Button';
 import { Input } from './Input';
@@ -35,7 +35,9 @@ export function TechnicianForm() {
   const [email, setEmail] = useState(technician?.email ?? '');
   const [password, setPassword] = useState('');
   const [availability, setAvailability] = useState<string[]>(
-    technician?.availability?.map((iso) => iso.slice(11, 16)) ?? [],
+    technician
+      ? technician.availability.map((iso) => iso.slice(11, 16)) // modo edit
+      : defaultAvailability, // novo técnico
   );
   const [error, setError] = useState<string | null>(null);
 
