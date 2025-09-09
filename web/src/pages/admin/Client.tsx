@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { ClientModal } from '../../components/ClientModal';
+import { ConfirmationModal } from '../../components/ConfirmationModal';
 import { Pagination } from '../../components/Pagination';
 import { api } from '../../services/api';
 import { getInitials } from '../../utils/get-name-initials';
@@ -14,6 +15,8 @@ export function Client() {
   const [clients, setClients] = useState<Client[]>([]);
   const [editClient, setEditClient] = useState<Client | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
 
   function handleEditClientModal(client: Client) {
     setEditClient(client);
@@ -37,10 +40,6 @@ export function Client() {
     });
   }
 
-  async function handleDeleteClient(id: string) {
-    alert('DELETAR : ' + id);
-  }
-
   async function fetchClients() {
     try {
       const { data } = await api.get<ClientAPIResponse>('/clients', {
@@ -59,6 +58,26 @@ export function Client() {
     }
   }
 
+  function handleOpenConfirmationModal(client: Client) {
+    setClientToDelete(client);
+    setIsConfirmationModalOpen(true);
+  }
+
+  function handleCloseConfirmationModal() {
+    setClientToDelete(null);
+    setIsConfirmationModalOpen(false);
+  }
+
+  async function handleDeleteClient(id: string) {
+    try {
+      await api.delete(`/clients/${id}`);
+      fetchClients();
+      handleCloseConfirmationModal();
+    } catch (error) {
+      setError('Erro ao deletar cliente');
+    }
+  }
+
   useEffect(() => {
     fetchClients();
   }, [page]);
@@ -68,9 +87,7 @@ export function Client() {
       <div className="mb-9">
         <h1 className="text-blue-dark font-lato font-bold text-2xl ">Clientes</h1>
       </div>
-
       {error && <p className="text-feedback-danger mb-3 font-lato text-sm">{error}</p>}
-
       <div className="rounded-lg overflow-hidden">
         <table className="w-full table-fixed">
           <thead
@@ -103,7 +120,7 @@ export function Client() {
                 <td className="p-2 sm:p-4">
                   <div className="flex justify-end gap-2">
                     <button
-                      onClick={() => handleDeleteClient(client.id)}
+                      onClick={() => handleOpenConfirmationModal(client)}
                       className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-red-200"
                     >
                       <svg
@@ -154,6 +171,22 @@ export function Client() {
         onPrevious={() => handlePagination('previous')}
       />
       <ClientModal isOpen={isModalOpen} onClose={handleCloseServiceModal} client={editClient} />
+
+      {clientToDelete && (
+        <ConfirmationModal
+          isOpen={isConfirmationModalOpen}
+          onClose={handleCloseConfirmationModal}
+          onConfirm={() => handleDeleteClient(clientToDelete.id)}
+          message={
+            <>
+              <p>
+                Tem certeza que deseja excluir o cliente: <b>{clientToDelete?.name}</b>?
+              </p>
+              <p>Esta ação não pode ser desfeita.</p>
+            </>
+          }
+        />
+      )}
     </>
   );
 }
