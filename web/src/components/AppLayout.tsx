@@ -101,7 +101,7 @@ export function AppLayout() {
         className={`fixed left-0 w-[220px] h-[280px] z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ top: '64px' }}
+        style={{ top: '6rem' }}
       >
         <SidebarMobileLayout />
       </div>

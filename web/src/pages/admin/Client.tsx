@@ -98,7 +98,6 @@ export function Client() {
               <th className="p-2 sm:p-4 text-sm">Nome</th>
               <th className="p-2 sm:p-4 text-sm text-center">E-mail</th>
               <th></th>
-              <th className="w-[30px] md:w-[80px]"></th>
             </tr>
           </thead>
           <tbody className="font-lato text-gray-200">
@@ -118,7 +117,7 @@ export function Client() {
                 </td>
                 <td className="p-2 sm:p-4 text-sm text-center truncate">{client.email}</td>
                 <td className="p-2 sm:p-4">
-                  <div className="flex justify-end gap-2">
+                  <div className="flex justify-center gap-2">
                     <button
                       onClick={() => handleOpenConfirmationModal(client)}
                       className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-red-200"
