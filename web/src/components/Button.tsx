@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { ComponentProps } from 'react';
 
 type Props = ComponentProps<'button'> & {
@@ -12,6 +13,7 @@ export function Button({
   type = 'button',
   variantStyle = 'default',
   variantSize = 'default',
+  className,
   ...rest
 }: Props) {
   // classename separados para legibilidade
@@ -24,13 +26,16 @@ export function Button({
       ? 'h-[40px] w-[147px] md:w-[188px]'
       : 'h-[40px] w-[294px] md:w-[344px]';
 
+  const buttonClasses = clsx(
+    baseClasses,
+    variantStyleClasses,
+    variantSizeClasses,
+    className,
+    isLoading && 'cursor-progress',
+  );
+
   return (
-    <button
-      type={type}
-      disabled={isLoading}
-      className={`${baseClasses} ${variantStyleClasses} ${variantSizeClasses} ${isLoading} && 'cursor-progress'`}
-      {...rest}
-    >
+    <button type={type} disabled={isLoading} className={buttonClasses} {...rest}>
       {isLoading ? 'Aguarde . . .' : children}
     </button>
   );

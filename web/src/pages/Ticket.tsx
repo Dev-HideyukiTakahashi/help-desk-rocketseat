@@ -1,8 +1,10 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Pagination } from '../components/Pagination';
 import { TicketStatus } from '../components/TicketStatus';
 import { api } from '../services/api';
+import { formatCurrency } from '../utils/format-currency';
 import { formatDate } from '../utils/format-date';
 import { getInitials } from '../utils/get-name-initials';
 
@@ -13,6 +15,7 @@ export function Ticket() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalOfPage, setTotalOfPage] = useState(0);
+  const navigate = useNavigate();
 
   function handlePagination(action: 'next' | 'previous') {
     setPage((prevPage) => {
@@ -87,10 +90,11 @@ export function Ticket() {
                   </p>
                 </td>
                 <td className="p-2 sm:p-4 text-sm font-lato hidden md:table-cell">
-                  R${' '}
-                  {ticket.services.reduce(
-                    (acc, s) => acc + Number(s.value),
-                    Number(ticket.initialCost),
+                  {formatCurrency(
+                    ticket.services.reduce(
+                      (acc, s) => acc + Number(s.value),
+                      Number(ticket.initialCost),
+                    ),
                   )}
                 </td>
                 <td className="p-2 sm:p-4 font-lato hidden md:table-cell">
@@ -121,7 +125,10 @@ export function Ticket() {
                   <TicketStatus status={ticket.status} />
                 </td>
                 <td className="p-2 sm:p-4">
-                  <button className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark">
+                  <button
+                    onClick={() => navigate('/ticket', { state: ticket })}
+                    className="bg-gray-500 p-2 sm:p-3 rounded-md cursor-pointer hover:text-gray-600 hover:bg-blue-dark"
+                  >
                     <svg
                       width="16"
                       height="16"

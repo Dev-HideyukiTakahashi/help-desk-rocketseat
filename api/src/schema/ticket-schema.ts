@@ -23,6 +23,7 @@ export const responseTicketSchema = z.object({
   technician: z.object({
     id: z.uuid(),
     name: z.string(),
+    email: z.string(),
   }),
   services: z.array(
     z.object({

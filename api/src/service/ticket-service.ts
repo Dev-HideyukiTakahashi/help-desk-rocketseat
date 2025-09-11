@@ -58,7 +58,7 @@ export class TicketService {
       orderBy: { createdAt: 'asc' },
       include: {
         client: { select: { id: true, name: true } },
-        technician: { select: { id: true, name: true } },
+        technician: { select: { id: true, name: true, email: true } },
         services: { select: { id: true, title: true, value: true } },
       },
     });
