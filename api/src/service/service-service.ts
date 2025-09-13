@@ -32,7 +32,7 @@ export class ServiceService {
     const data = await prisma.service.findMany({
       skip,
       take: perPage,
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: 'desc' },
     });
 
     const totalRecords = await prisma.service.count();

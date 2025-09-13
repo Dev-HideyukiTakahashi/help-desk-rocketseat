@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 import { AppLayout } from '../components/AppLayout';
-import { AddTicket } from '../pages/AddTicket';
+import { CreateTicket } from '../pages/CreateTicket';
 import { NotFound } from '../pages/NotFound';
 import { Ticket } from '../pages/Ticket';
 import { TicketDetails } from '../pages/TicketDetails';
@@ -10,7 +10,7 @@ export function ClientRoutes() {
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route path="/" element={<Ticket />} />
-        <Route path="/ticket/new" element={<AddTicket />} />
+        <Route path="/ticket/new" element={<CreateTicket />} />
         <Route path="/ticket" element={<TicketDetails />} />
       </Route>
 

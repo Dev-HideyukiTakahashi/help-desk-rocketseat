@@ -72,7 +72,7 @@ export class TechnicianService {
     const data = await prisma.technician.findMany({
       skip,
       take: perPage,
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: 'desc' },
       include: { availability: true },
     });
 

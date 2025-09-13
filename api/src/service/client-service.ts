@@ -55,7 +55,7 @@ export class ClientService {
     const data = await prisma.client.findMany({
       skip,
       take: perPage,
-      orderBy: { createdAt: 'asc' },
+      orderBy: { createdAt: 'desc' },
     });
 
     const totalRecords = await prisma.client.count();

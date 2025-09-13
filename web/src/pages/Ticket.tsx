@@ -58,19 +58,19 @@ export function Ticket() {
       {error && <p className="text-feedback-danger mb-3 font-lato text-sm">{error}</p>}
 
       <div className="border border-gray-500 rounded-lg overflow-hidden">
-        <table className="w-full">
+        <table className="w-full table-fixed md:table-auto">
           <thead
             className="text-gray-400 font-lato font-bold text-base
             border border-gray-500 text-left"
           >
             <tr>
-              <th className="p-2 sm:p-4 text-sm">Atualizado em</th>
+              <th className="p-2 sm:p-4 text-sm truncate">Atualizado em</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Id</th>
-              <th className="p-2 sm:p-4 text-sm">Título e Serviço</th>
+              <th className="p-2 sm:p-4 text-sm w-2/5 md:w-auto">Título e Serviço</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Valor total</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Cliente</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Técnico</th>
-              <th className="p-2 sm:p-4 text-sm">Status</th>
+              <th className="p-2 sm:p-4 text-sm text-center md:text-start">Status</th>
               <th className="p-2 sm:p-4"></th>
             </tr>
           </thead>
@@ -81,13 +81,9 @@ export function Ticket() {
                 <td className="p-2 sm:p-4 text-xs font-lato font-bold hidden md:table-cell">
                   {ticket.id.toString().padStart(5, '0')}
                 </td>
-                <td className="p-2 sm:p-4 font-lato">
-                  <span className="font-bold text-sm max-w-[60px] sm:max-w-none truncate">
-                    {ticket.title}
-                  </span>
-                  <p className="text-xs max-w-[60px] sm:max-w-none truncate">
-                    {ticket.description}
-                  </p>
+                <td className="p-2 sm:p-4 font-lato truncate">
+                  <span className="font-bold text-sm">{ticket.title}</span>
+                  <p className="text-xs truncate">{ticket.description}</p>
                 </td>
                 <td className="p-2 sm:p-4 text-sm font-lato hidden md:table-cell">
                   {formatCurrency(
@@ -122,7 +118,9 @@ export function Ticket() {
                   </div>
                 </td>
                 <td className="p-2 sm:p-4">
-                  <TicketStatus status={ticket.status} />
+                  <div className="flex justify-center">
+                    <TicketStatus status={ticket.status} />
+                  </div>
                 </td>
                 <td className="p-2 sm:p-4">
                   <button
