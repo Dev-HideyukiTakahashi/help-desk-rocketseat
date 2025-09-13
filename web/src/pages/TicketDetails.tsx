@@ -2,6 +2,7 @@ import { useActionState, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Button } from '../components/Button';
 import { Loading } from '../components/Loading';
+import { TicketDetailsButton } from '../components/TicketDetailsButton';
 import { TicketStatus } from '../components/TicketStatus';
 import { useAuth } from '../hooks/useAuth';
 import { formatCurrency } from '../utils/format-currency';
@@ -72,7 +73,7 @@ export function TicketDetails() {
               <Button
                 variantStyle="light"
                 variantSize="confirmWindow"
-                className="flex items-center justify-center gap-2 text-gray-200"
+                className="flex items-center justify-center gap-2 text-gray-200 !cursor-none"
               >
                 <svg
                   width="18"
@@ -97,7 +98,7 @@ export function TicketDetails() {
               <Button
                 variantStyle="light"
                 variantSize="confirmWindow"
-                className="flex items-center justify-center gap-2 text-gray-200"
+                className="flex items-center justify-center gap-2 text-gray-200 !cursor-none"
               >
                 <svg
                   width="18"
@@ -118,6 +119,8 @@ export function TicketDetails() {
             )}
           </div>
         )}
+
+        {role === 'TECHNICIAN' && <TicketDetailsButton status={ticket.status} />}
       </div>
 
       <form action={formAction} className="flex flex-col md:flex-row gap-8" id="technician-form">
@@ -193,7 +196,7 @@ export function TicketDetails() {
             <div className="mb-4">
               <span className="text-gray-400 font-lato font-bold text-xs">Adicionais</span>
               {ticket.services.map((service) => (
-                <div className="flex place-content-between">
+                <div key={service.id} className="flex place-content-between">
                   <p className="text-gray-200 font-lato text-xs">{service.title}</p>
                   <p className="text-gray-200 font-lato text-xs">{formatCurrency(service.value)}</p>
                 </div>

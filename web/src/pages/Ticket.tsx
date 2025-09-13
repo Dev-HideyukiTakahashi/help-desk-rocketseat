@@ -43,7 +43,7 @@ export function Ticket() {
       setError(null);
     } catch (error) {
       if (error instanceof AxiosError) {
-        setError(error.response?.data.message || 'Erro ao carregar técnicos.');
+        setError(error.response?.data.message || 'Erro ao carregar tickets.');
       }
     }
   }
