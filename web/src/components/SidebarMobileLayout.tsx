@@ -1,7 +1,11 @@
 import { NavLink } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 
-export function SidebarMobileLayout() {
+type Props = {
+  onClose: () => void;
+};
+
+export function SidebarMobileLayout({ onClose }: Props) {
   const { session } = useAuth();
 
   return (
@@ -13,6 +17,7 @@ export function SidebarMobileLayout() {
         {/* TICKETS */}
         <NavLink
           to="/"
+          onClick={onClose}
           className={({ isActive }) =>
             `flex items-center gap-[12px] h-[44px] text-gray-400 cursor-pointer px-5
             hover:bg-gray-200 hover:rounded-sm hover:text-gray-600
@@ -39,6 +44,7 @@ export function SidebarMobileLayout() {
         {/* ADD TICKET */}
         {session?.user.role === 'CLIENT' && (
           <NavLink
+            onClick={onClose}
             to={'/ticket/new'}
             className={({ isActive }) =>
               `flex items-center gap-[12px] h-[44px] text-gray-400 cursor-pointer px-5
@@ -66,6 +72,7 @@ export function SidebarMobileLayout() {
         {session?.user.role === 'ADMIN' && (
           <NavLink
             to="/technicians"
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-[12px] h-[44px] text-gray-400 cursor-pointer px-5
             hover:bg-gray-200 hover:rounded-sm hover:text-gray-600
@@ -92,6 +99,7 @@ export function SidebarMobileLayout() {
         {session?.user.role === 'ADMIN' && (
           <NavLink
             to="/clients"
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-[12px] h-[44px] text-gray-400 cursor-pointer px-5
             hover:bg-gray-200 hover:rounded-sm hover:text-gray-600
@@ -116,6 +124,7 @@ export function SidebarMobileLayout() {
         {session?.user.role === 'ADMIN' && (
           <NavLink
             to="/services"
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-[12px] h-[44px] text-gray-400 cursor-pointer px-5
             hover:bg-gray-200 hover:rounded-sm hover:text-gray-600

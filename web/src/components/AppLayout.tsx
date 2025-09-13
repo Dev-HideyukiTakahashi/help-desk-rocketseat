@@ -103,7 +103,7 @@ export function AppLayout() {
         }`}
         style={{ top: '6rem' }}
       >
-        <SidebarMobileLayout />
+        <SidebarMobileLayout onClose={() => setIsSidebarOpen(false)} />
       </div>
       <div className="md:ml-[200px] flex-grow">
         <MainLayout />
