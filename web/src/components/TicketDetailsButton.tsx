@@ -45,7 +45,7 @@ export function TicketDetailsButton({ ticket, handleError, ...rest }: Props) {
 
   async function handleOpenTicket() {
     try {
-      await api.patch(`/tickets/${ticket.id}`, { status: 'PROCESSING' });
+      await api.patch(`/tickets/${ticket.id}/status`, { status: 'PROCESSING' });
       handleCloseConfirmationModal();
       navigate(-1);
     } catch (error) {
@@ -63,7 +63,7 @@ export function TicketDetailsButton({ ticket, handleError, ...rest }: Props) {
 
   async function handleCloseTicket() {
     try {
-      await api.patch(`/tickets/${ticket.id}`, { status: 'CLOSED' });
+      await api.patch(`/tickets/${ticket.id}/status`, { status: 'CLOSED' });
       handleCloseConfirmationModal();
       navigate(-1);
     } catch (error) {

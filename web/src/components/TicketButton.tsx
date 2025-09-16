@@ -47,7 +47,7 @@ export function TicketButton({ status, ticketId, handleError, handleUpdated, ...
 
   async function handleOpenTicket() {
     try {
-      await api.patch(`/tickets/${ticketId}`, { status: 'PROCESSING' });
+      await api.patch(`/tickets/${ticketId}/status`, { status: 'PROCESSING' });
       handleCloseConfirmationModal();
       handleUpdated();
     } catch (error) {
@@ -65,7 +65,7 @@ export function TicketButton({ status, ticketId, handleError, handleUpdated, ...
 
   async function handleCloseTicket() {
     try {
-      await api.patch(`/tickets/${ticketId}`, { status: 'CLOSED' });
+      await api.patch(`/tickets/${ticketId}/status`, { status: 'CLOSED' });
       handleCloseConfirmationModal();
       handleUpdated();
     } catch (error) {

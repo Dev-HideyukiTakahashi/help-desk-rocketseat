@@ -11,6 +11,7 @@ ticketRoutes.use(ensureAuthenticated);
 
 ticketRoutes.post('/', verifyAuthorization(['CLIENT']), ticketController.create);
 ticketRoutes.get('/', ticketController.index);
-ticketRoutes.patch('/:id', ticketController.updateStatus);
+ticketRoutes.patch('/:id/status', ticketController.updateStatus);
+ticketRoutes.patch('/:id/services', ticketController.updateServices);
 
 export { ticketRoutes };

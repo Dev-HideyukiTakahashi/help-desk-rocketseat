@@ -6,12 +6,21 @@ import { Input } from './Input';
 
 type Props = {
   service?: Service;
+  ticket?: Ticket;
   isOpen: boolean;
   isAddService: boolean;
   onClose: () => void;
+  onServiceAdded?: (ticket: Ticket) => void;
 };
 
-export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) {
+export function ServiceModal({
+  service,
+  isOpen,
+  isAddService,
+  onClose,
+  onServiceAdded,
+  ticket,
+}: Props) {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
@@ -46,6 +55,14 @@ export function ServiceModal({ service, isOpen, isAddService, onClose }: Props) 
 
       if (!isAddService && service) {
         await api.put(`/services/${service.id}`, data);
+      } else if (!isAddService && ticket) {
+        const response = await api.post('/services', data);
+        const serviceId = response.data.id;
+        const updatedTicket = await api.patch(`/tickets/${ticket.id}/services`, { serviceId });
+
+        if (onServiceAdded) {
+          onServiceAdded(updatedTicket.data);
+        }
       } else {
         await api.post('/services', data);
       }

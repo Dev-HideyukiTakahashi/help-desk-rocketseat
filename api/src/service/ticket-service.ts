@@ -91,4 +91,28 @@ export class TicketService {
 
     return ticket;
   }
+
+  async updateServices(id: number, serviceId: string) {
+    const newService = await prisma.service.findUnique({ where: { id: serviceId } });
+
+    const data = await prisma.ticket.update({
+      where: { id },
+      data: {
+        services: {
+          connect: { id: newService?.id },
+        },
+      },
+      include: {
+        client: { select: { id: true, name: true } },
+        technician: { select: { id: true, name: true, email: true } },
+        services: { select: { id: true, title: true, value: true } },
+      },
+    });
+
+    const normalized = normalizeTickets([data])[0];
+
+    const ticket = responseTicketSchema.parse(normalized);
+
+    return ticket;
+  }
 }
