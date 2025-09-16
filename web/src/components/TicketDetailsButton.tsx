@@ -1,25 +1,94 @@
+import { AxiosError } from 'axios';
 import clsx from 'clsx';
-import type { ComponentProps } from 'react';
+import { useState, type ComponentProps } from 'react';
+import { useNavigate } from 'react-router';
+import { ZodError } from 'zod';
+import { api } from '../services/api';
+import { ConfirmationModal } from './ConfirmationModal';
 
 type Props = ComponentProps<'button'> & {
-  status: 'OPEN' | 'PROCESSING' | 'CLOSED';
+  ticket: Ticket;
+  handleError: (errorMessage: string) => void;
 };
 
-export function TicketDetailsButton({ status, ...rest }: Props) {
+export function TicketDetailsButton({ ticket, handleError, ...rest }: Props) {
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  if(status === 'CLOSED'){
+  let modalMessage = '';
+
+  if (ticket.status === 'CLOSED') {
     return;
+  }
+
+  if (ticket.status === 'PROCESSING') {
+    modalMessage = 'Deseja encerrar chamado?';
+  } else if (ticket.status === 'OPEN') {
+    modalMessage = 'Deseja iniciar chamado?';
+  }
+
+  function handleClickModal() {
+    setIsConfirmationModalOpen(true);
+  }
+
+  function handleCloseConfirmationModal() {
+    setIsConfirmationModalOpen(false);
+  }
+
+  function handleConfirmModal() {
+    if (ticket.status === 'PROCESSING') {
+      handleCloseTicket();
+    } else if (ticket.status === 'OPEN') {
+      handleOpenTicket();
+    }
+  }
+
+  async function handleOpenTicket() {
+    try {
+      await api.patch(`/tickets/${ticket.id}`, { status: 'PROCESSING' });
+      handleCloseConfirmationModal();
+      navigate(-1);
+    } catch (error) {
+      let errorMessage = 'Ocorreu um erro inesperado.';
+
+      if (error instanceof ZodError) {
+        errorMessage = error.issues[0].message || 'Erro de validação';
+      } else if (error instanceof AxiosError) {
+        errorMessage = error.response?.data.message || 'Erro de rede';
+      }
+
+      handleError(errorMessage);
+    }
+  }
+
+  async function handleCloseTicket() {
+    try {
+      await api.patch(`/tickets/${ticket.id}`, { status: 'CLOSED' });
+      handleCloseConfirmationModal();
+      navigate(-1);
+    } catch (error) {
+      let errorMessage = 'Ocorreu um erro inesperado.';
+
+      if (error instanceof ZodError) {
+        errorMessage = error.issues[0].message || 'Erro de validação';
+      } else if (error instanceof AxiosError) {
+        errorMessage = error.response?.data.message || 'Erro de rede';
+      }
+
+      handleError(errorMessage);
+    }
   }
 
   return (
     <div className="flex gap-2 mt-3">
       <button
+        onClick={handleClickModal}
         className={clsx(
           'font-lato font-bold text-sm rounded-md flex items-center justify-center gap-2 p-2 px-3',
           'bg-gray-500 text-gray-200',
-          status === 'OPEN' ? 'cursor-none' : 'cursor-pointer',
+          ticket.status === 'OPEN' ? 'cursor-none' : 'cursor-pointer',
         )}
-        disabled={status === 'OPEN'}
+        disabled={ticket.status === 'OPEN'}
         {...rest}
       >
         <svg
@@ -39,12 +108,13 @@ export function TicketDetailsButton({ status, ...rest }: Props) {
         Encerrar
       </button>
       <button
+        onClick={handleClickModal}
         className={clsx(
           'font-lato font-bold text-sm rounded-md flex items-center gap-2 p-2 px-3',
           'bg-gray-200 text-gray-600',
-          status === 'PROCESSING' ? 'cursor-none' : 'cursor-pointer',
+          ticket.status === 'PROCESSING' ? 'cursor-none' : 'cursor-pointer',
         )}
-        disabled={status === 'PROCESSING'}
+        disabled={ticket.status === 'PROCESSING'}
       >
         <svg
           width="16"
@@ -62,6 +132,12 @@ export function TicketDetailsButton({ status, ...rest }: Props) {
         </svg>
         Iniciar Atendimento
       </button>
+      <ConfirmationModal
+        isOpen={isConfirmationModalOpen}
+        onClose={handleCloseConfirmationModal}
+        onConfirm={() => handleConfirmModal()}
+        message={modalMessage}
+      />
     </div>
   );
 }

@@ -33,6 +33,14 @@ export function TicketDetails() {
     return () => clearTimeout(timerId);
   }, [ticket]);
 
+  function handleTicketUpdateError(message: string) {
+    setError(message);
+
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
+  }
+
   if (!ticket) {
     return <Loading />;
   }
@@ -120,7 +128,9 @@ export function TicketDetails() {
           </div>
         )}
 
-        {role === 'TECHNICIAN' && <TicketDetailsButton status={ticket.status} />}
+        {role === 'TECHNICIAN' && (
+          <TicketDetailsButton ticket={ticket} handleError={handleTicketUpdateError} />
+        )}
       </div>
 
       <form action={formAction} className="flex flex-col md:flex-row gap-8" id="technician-form">

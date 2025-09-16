@@ -1,3 +1,4 @@
+import { TicketStatus } from '@prisma/client';
 import z from 'zod';
 import { prisma } from '../config/prisma-config';
 import { CreateTicketPayload, responseTicketSchema } from '../schema/ticket-schema';
@@ -78,5 +79,16 @@ export class TicketService {
     const tickets = responseTicketArraySchema.parse(normalized);
 
     return { tickets, pagination };
+  }
+
+  async updateStatus(id: number, status: TicketStatus) {
+    const ticket = await prisma.ticket.update({
+      where: { id },
+      data: {
+        status,
+      },
+    });
+
+    return ticket;
   }
 }

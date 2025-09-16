@@ -8,6 +8,12 @@ interface Props {
 }
 
 export function ConfirmationModal({ isOpen, onClose, onConfirm, message }: Props) {
+  const btnConfirmColor = message?.toString().startsWith('Deseja')
+    ? 'bg-gray-200 '
+    : 'bg-red-600 text-white hover:bg-red-500';
+
+  const buttonClasses = `text-white px-4 py-2 cursor-pointer rounded-md ${btnConfirmColor} transition-colors`;
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -62,14 +68,11 @@ export function ConfirmationModal({ isOpen, onClose, onConfirm, message }: Props
         <footer className="flex justify-end gap-3 p-4 border-t border-gray-500">
           <button
             onClick={onClose}
-            className="px-4 py-2 cursor-pointer  rounded-md bg-gray-500 text-gray-200 hover:bg-gray-400 transition-colors"
+            className="px-4 py-2 cursor-pointer  rounded-md bg-gray-500 text-gray-200"
           >
             Cancelar
           </button>
-          <button
-            onClick={onConfirm}
-            className="px-4 py-2 cursor-pointer rounded-md bg-red-600 text-white hover:bg-red-500 transition-colors"
-          >
+          <button onClick={onConfirm} className={buttonClasses}>
             Confirmar
           </button>
         </footer>
