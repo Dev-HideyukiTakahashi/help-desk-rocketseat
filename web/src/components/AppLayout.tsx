@@ -7,12 +7,17 @@ import { getInitials } from '../utils/get-name-initials';
 import { translateRole } from '../utils/translate-role';
 import { MainLayout } from './MainLayout';
 import { ProfileMenu } from './ProfileMenu';
+import { ProfileModal } from './ProfileModal';
 import { SidebarLayout } from './SidebarLayout';
 import { SidebarMobileLayout } from './SidebarMobileLayout';
 
 export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const openProfileModal = () => setIsProfileModalOpen(true);
+  const closeProfileModal = () => setIsProfileModalOpen(false);
+
   const { session } = useAuth();
   const sidebarRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -56,7 +61,7 @@ export function AppLayout() {
     <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100 overflow-x-hidden">
       {/* Sidebar para telas grandes (desktop) */}+{' '}
       <div className="hidden md:block fixed h-screen w-[200px]">
-        <SidebarLayout />
+        <SidebarLayout onOpenProfileModal={openProfileModal} />
       </div>
       {/* Cabeçalho e botão do menu hambúrguer para mobile */}
       <header className="flex items-center p-4 md:hidden">
@@ -90,7 +95,11 @@ export function AppLayout() {
           </div>
           {isProfileMenuOpen && (
             <div ref={profileMenuRef}>
-              <ProfileMenu isOpen={isProfileMenuOpen} onClose={toggleProfileMenu} />
+              <ProfileMenu
+                isOpen={isProfileMenuOpen}
+                onClose={toggleProfileMenu}
+                onOpenModal={openProfileModal}
+              />
             </div>
           )}
         </div>
@@ -103,11 +112,15 @@ export function AppLayout() {
         }`}
         style={{ top: '6rem' }}
       >
-        <SidebarMobileLayout onClose={() => setIsSidebarOpen(false)} />
+        <SidebarMobileLayout
+          onClose={() => setIsSidebarOpen(false)}
+          // onOpenProfileModal={openProfileModal}
+        />
       </div>
       <div className="md:ml-[200px] flex-grow">
         <MainLayout />
       </div>
+      <ProfileModal isOpen={isProfileModalOpen} onClose={closeProfileModal} />
     </div>
   );
 }

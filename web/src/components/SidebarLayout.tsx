@@ -6,9 +6,17 @@ import { getInitials } from '../utils/get-name-initials';
 import { translateRole } from '../utils/translate-role';
 import { ProfileMenu } from './ProfileMenu';
 
-export function SidebarLayout() {
+type Props = {
+  onOpenProfileModal: () => void;
+};
+
+export function SidebarLayout({ onOpenProfileModal }: Props) {
   const { session, remove } = useAuth();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  const openProfileModal = () => setIsProfileModalOpen(true);
+  const closeProfileModal = () => setIsProfileModalOpen(false);
 
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const profileButtonRef = useRef<HTMLDivElement>(null);
@@ -195,7 +203,11 @@ export function SidebarLayout() {
 
           {isProfileMenuOpen && (
             <div ref={profileMenuRef} className="absolute bottom-[60px]">
-              <ProfileMenu isOpen={isProfileMenuOpen} onClose={toggleProfileMenu} />
+              <ProfileMenu
+                isOpen={isProfileMenuOpen}
+                onClose={toggleProfileMenu}
+                onOpenModal={onOpenProfileModal}
+              />
             </div>
           )}
         </footer>

@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import CircleUserSVG from '../assets/icons/circle-user.svg';
 import LogoutSVG from '../assets/icons/log-out.svg';
 import { useAuth } from '../hooks/useAuth';
@@ -6,13 +5,19 @@ import { useAuth } from '../hooks/useAuth';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onOpenModal: () => void;
 };
 
-export function ProfileMenu({ isOpen, onClose }: Props) {
+export function ProfileMenu({ isOpen, onClose, onOpenModal }: Props) {
   const { remove, session } = useAuth();
 
   if (!isOpen) {
     return null;
+  }
+
+  function handleOpenProfileModal() {
+    onClose();
+    onOpenModal();
   }
 
   return (
@@ -25,14 +30,14 @@ export function ProfileMenu({ isOpen, onClose }: Props) {
         Opções
       </div>
       {session?.user.role !== 'ADMIN' && (
-        <Link
-          to={'/'}
+        <div
           className="text-gray-600 text-xs font-lato flex items-center gap-2 mt-4 p-3 
         hover:bg-blue-dark hover:rounded-sm"
+          onClick={handleOpenProfileModal}
         >
           <img src={CircleUserSVG} alt="profile-icon" className="w-[20px] h-[20px]" />
           <span className="text-sm font-lato">Perfil</span>
-        </Link>
+        </div>
       )}
 
       <button

@@ -5,4 +5,5 @@ export const responseUserSchema = z.object({
   email: z.email(),
   name: z.string(),
   role: z.string(),
+  profilePhoto: z.url().optional().nullable(),
 });

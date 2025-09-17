@@ -7,5 +7,6 @@ type UserAPIResponse = {
     name: string;
     email: string;
     role: UserAPIRole;
+    profilePhoto: string;
   };
 };
