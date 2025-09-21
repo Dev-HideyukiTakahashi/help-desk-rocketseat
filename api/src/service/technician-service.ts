@@ -5,6 +5,7 @@ import {
   CreateTechnicianPayload,
   responseTechnicianSchema,
   UpdateTechnicianPayload,
+  updateTechnicianSchema,
 } from '../schema/technician-schema';
 import { AppError } from '../util/app-error';
 import { UpdatePasswordPayload } from '../schema/user-schema';
@@ -66,6 +67,23 @@ export class TechnicianService {
     const technicians = responseTechnicianArraySchema.parse(list);
 
     return { technicians, pagination };
+  }
+
+  async update(id: string, payload: UpdateTechnicianPayload) {
+    const { email, name, profilePhoto } = payload;
+
+    const data = await prisma.technician.update({
+      where: { id },
+      data: {
+        profilePhoto: profilePhoto ?? null,
+        name,
+        email,
+      },
+    });
+
+    const technician = updateTechnicianSchema.parse(data);
+
+    return technician;
   }
 
   async updatePassword(id: string, payload: UpdatePasswordPayload) {

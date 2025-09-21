@@ -10,12 +10,19 @@ export const createTechnicianSchema = z.object({
 
 export type CreateTechnicianPayload = z.infer<typeof createTechnicianSchema>;
 
-export const updateTechnicianSchema = z.object({
+export const updateTechnicianByAdminSchema = z.object({
   email: z.email({ message: 'Informe um email válido' }),
   password: z.string().min(6, { message: 'Mínimo de 6 caracteres.' }).optional(),
   name: z.string().min(2, { message: 'Informe um nome válido.' }),
   profilePhoto: z.string().nullable().optional(),
   availability: z.array(z.coerce.date()).nonempty({ message: 'Informe pelo menos um horário' }),
+});
+export type UpdateTechnicianByAdminPayload = z.infer<typeof updateTechnicianByAdminSchema>;
+
+export const updateTechnicianSchema = z.object({
+  email: z.email({ message: 'Informe um email válido' }),
+  name: z.string().min(2, { message: 'Informe um nome válido.' }),
+  profilePhoto: z.string().nullable().optional(),
 });
 export type UpdateTechnicianPayload = z.infer<typeof updateTechnicianSchema>;
 

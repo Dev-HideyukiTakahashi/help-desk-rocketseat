@@ -21,6 +21,14 @@ export class TechnicianController {
     return response.json(technicians);
   }
 
+  async update(request: Request, response: Response) {
+    const payload = updateTechnicianSchema.parse(request.body);
+    const { id } = request.params;
+    const technician = await technicianService.update(id, payload);
+
+    return response.json(technician);
+  }
+
   async updatePassword(request: Request, response: Response) {
     const payload = updatePasswordSchema.parse(request.body);
     const { id } = request.params;
