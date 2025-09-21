@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { createClientSchema, updateClientSchema } from '../schema/client-schema';
 import { paginationSchema } from '../schema/pagination-schema';
 import { ClientService } from '../service/client-service';
+import { updatePasswordSchema } from '../schema/user-schema';
 
 const clientService = new ClientService();
 
@@ -39,6 +40,14 @@ export class ClientController {
     const { id } = request.params;
     await clientService.delete(id);
 
-    return response.sendStatus(204);
+    return response.status(204).end();
+  }
+
+  async updatePassword(request: Request, response: Response) {
+    const payload = updatePasswordSchema.parse(request.body);
+    const { id } = request.params;
+    await clientService.updatePassword(id, payload);
+
+    return response.end();
   }
 }

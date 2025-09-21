@@ -7,3 +7,10 @@ export const responseUserSchema = z.object({
   role: z.string(),
   profilePhoto: z.url().optional().nullable(),
 });
+
+export const updatePasswordSchema = z.object({
+  password: z.string(),
+  newPassword: z.string(),
+});
+
+export type UpdatePasswordPayload = z.infer<typeof updatePasswordSchema>;

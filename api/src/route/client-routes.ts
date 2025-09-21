@@ -15,5 +15,6 @@ clientRoutes.put('/:id', verifyAuthorization(['ADMIN', 'CLIENT']), clientControl
 clientRoutes.get('/', verifyAuthorization(['ADMIN']), clientController.index);
 clientRoutes.get('/:id', verifyAuthorization(['ADMIN', 'CLIENT']), clientController.show);
 clientRoutes.delete('/:id', verifyAuthorization(['ADMIN']), clientController.delete);
+clientRoutes.patch('/:id', verifyAuthorization(['CLIENT']), clientController.updatePassword);
 
 export { clientRoutes };
