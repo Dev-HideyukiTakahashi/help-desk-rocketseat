@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { paginationSchema } from '../schema/pagination-schema';
 import { createTechnicianSchema, updateTechnicianSchema } from '../schema/technician-schema';
 import { TechnicianService } from '../service/technician-service';
+import { updatePasswordSchema } from '../schema/user-schema';
 
 const technicianService = new TechnicianService();
 
@@ -25,5 +26,13 @@ export class TechnicianController {
     const technicians = await technicianService.index(page, perPage);
 
     return response.json(technicians);
+  }
+
+  async updatePassword(request: Request, response: Response) {
+    const payload = updatePasswordSchema.parse(request.body);
+    const { id } = request.params;
+    await technicianService.updatePassword(id, payload);
+
+    return response.end();
   }
 }

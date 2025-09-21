@@ -32,8 +32,9 @@ export function ChangePasswordContent({ onBack, id, role }: ChangePasswordConten
 
       if (role === 'CLIENT') {
         await api.patch(`/clients/${id}`, data);
-      } else {
-        console.log('oi');
+      }
+      if (role === 'TECHNICIAN') {
+        await api.patch(`/technicians/${id}`, data);
       }
 
       setSuccess('Senha alterada com sucesso');

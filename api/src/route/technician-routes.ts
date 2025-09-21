@@ -17,5 +17,10 @@ technicianRoutes.put(
   verifyAuthorization(['TECHNICIAN', 'ADMIN']),
   technicianController.update,
 );
+technicianRoutes.patch(
+  '/:id',
+  verifyAuthorization(['TECHNICIAN']),
+  technicianController.updatePassword,
+);
 
 export { technicianRoutes };
