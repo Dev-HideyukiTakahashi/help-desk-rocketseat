@@ -50,14 +50,21 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
       email,
     };
 
+    let response;
     try {
-      const response = await api.put(`/clients/${id}`, data);
+      if (session.user.role === 'CLIENT') {
+        response = await api.put(`/clients/${id}`, data);
+      }
+
+      if (session.user.role === 'TECHNICIAN') {
+        response = await api.put(`/technicians/${id}`, data);
+      }
 
       update({
         ...session,
         user: {
           ...session.user,
-          ...response.data,
+          ...response?.data,
         },
       });
 

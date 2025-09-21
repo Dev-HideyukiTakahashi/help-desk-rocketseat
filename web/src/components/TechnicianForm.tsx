@@ -57,7 +57,7 @@ export function TechnicianForm() {
       technicianSchema.parse(data);
 
       if (technician) {
-        await api.put(`/technicians/${technician.id}`, data);
+        await api.put(`/admin/${technician.id}/technician/`, data);
       } else {
         await api.post('/technicians', data);
       }

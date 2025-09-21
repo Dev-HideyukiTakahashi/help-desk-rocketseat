@@ -12,11 +12,6 @@ technicianRoutes.use(ensureAuthenticated);
 // routes
 technicianRoutes.get('/', verifyAuthorization(['ADMIN']), technicianController.index);
 technicianRoutes.post('/', verifyAuthorization(['ADMIN']), technicianController.create);
-technicianRoutes.put(
-  '/:id',
-  verifyAuthorization(['TECHNICIAN', 'ADMIN']),
-  technicianController.update,
-);
 technicianRoutes.patch(
   '/:id',
   verifyAuthorization(['TECHNICIAN']),

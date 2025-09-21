@@ -13,13 +13,6 @@ export class TechnicianController {
 
     return response.status(201).json(technician);
   }
-  async update(request: Request, response: Response) {
-    const { id } = request.params;
-    const payload = updateTechnicianSchema.parse(request.body);
-    const technician = await technicianService.update(id, payload);
-
-    return response.json(technician);
-  }
 
   async index(request: Request, response: Response) {
     const { page, perPage } = paginationSchema.parse(request.query);
