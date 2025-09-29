@@ -70,7 +70,7 @@ export function Ticket() {
               <th className="p-2 sm:p-4 hidden md:table-cell">Valor total</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Cliente</th>
               <th className="p-2 sm:p-4 hidden md:table-cell">Técnico</th>
-              <th className="p-2 sm:p-4 text-sm text-center md:text-start">Status</th>
+              <th className="p-2 sm:p-4 text-sm text-center">Status</th>
               <th className="p-2 sm:p-4"></th>
             </tr>
           </thead>
