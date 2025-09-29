@@ -10,6 +10,8 @@ export class AdminService {
     const { email, password, name, profilePhoto, availability } = payload;
     const hashedPassword = password ? await hash(password, 8) : undefined;
 
+    console.log('AVAAIL :', payload);
+
     const data = await prisma.technician.update({
       where: { id },
       data: {
