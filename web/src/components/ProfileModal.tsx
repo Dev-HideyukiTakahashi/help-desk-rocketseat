@@ -20,14 +20,23 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
   const [email, setEmail] = useState(session?.user.email || '');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [technician, setTechnician] = useState<Technician>();
 
   useEffect(() => {
     if (isOpen && session) {
       setName(session.user.name || '');
       setEmail(session.user.email || '');
       setError('');
+      loadTechnician();
     }
   }, [isOpen, session]);
+
+  async function loadTechnician() {
+    if (session?.user.role === 'TECHNICIAN') {
+      const { data } = await api.get(`/technicians/${session.user.id}`);
+      setTechnician(data);
+    }
+  }
 
   const handleToggleChangePassword = () => {
     setIsChangePasswordOpen((prev) => !prev);
@@ -204,6 +213,26 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
               </div>
 
               <div className="border-b border-gray-500 w-[calc(100%+48px)] -ml-6 mb-5"></div>
+
+              {technician && (
+                <>
+                  <h2 className="text-gray-200 text-sm font-bold font-lato">Disponibilidade</h2>
+                  <p className="text-gray-300 text-xs font-lato">Horarios de atendimento</p>
+
+                  <div className="flex flex-wrap gap-x-2 gap-y-2 mt-3 mb-5">
+                    {technician.availability.map((iso, index) => (
+                      <span
+                        key={index}
+                        className="text-gray-400 px-2 py-1 rounded-full border-1 border-gray-400 text-xs flex-shrink-0"
+                      >
+                        {iso.slice(11, 16)}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="border-b border-gray-500 w-[calc(100%+48px)] -ml-6 mb-5"></div>
+                </>
+              )}
 
               <Button type="submit" className="mx-auto block mt-4">
                 {isLoading ? 'Salvando...' : 'Salvar'}

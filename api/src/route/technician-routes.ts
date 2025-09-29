@@ -13,6 +13,7 @@ technicianRoutes.use(ensureAuthenticated);
 technicianRoutes.get('/', verifyAuthorization(['ADMIN']), technicianController.index);
 technicianRoutes.post('/', verifyAuthorization(['ADMIN']), technicianController.create);
 technicianRoutes.put('/:id', verifyAuthorization(['TECHNICIAN']), technicianController.update);
+technicianRoutes.get('/:id', verifyAuthorization(['TECHNICIAN']), technicianController.show);
 technicianRoutes.patch(
   '/:id',
   verifyAuthorization(['TECHNICIAN']),
