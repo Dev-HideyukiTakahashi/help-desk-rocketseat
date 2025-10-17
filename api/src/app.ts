@@ -3,6 +3,7 @@ import express from 'express';
 import { env } from './config/env';
 import { errorHandling } from './middleware/error-handling';
 import { routes } from './route';
+import uploadConfig from './config/upload';
 
 const app = express();
 
@@ -21,6 +22,9 @@ app.use(
 );
 
 app.use(express.json());
+
+// para acessar imgs (get)
+app.use('/uploads', express.static(uploadConfig.UPLOADS_FOLDER));
 app.use(routes);
 
 app.use(errorHandling);
