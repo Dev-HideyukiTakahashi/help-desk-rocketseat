@@ -81,7 +81,7 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
 
     setIsLoading(true);
     const id = session.user.id;
-    let finalProfilePhoto = session.user.profilePhoto || null;
+    let photoPayload: string | null | undefined = undefined;
 
     try {
       // Upload PHOTO
@@ -93,16 +93,22 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 
-        finalProfilePhoto = uploadResponse.data.filename;
+        photoPayload = uploadResponse.data.filename;
       } else if (isPhotoRemoved) {
-        finalProfilePhoto = null;
+        photoPayload = null;
+      }
+
+      let photoToUpdateSession: string | null = session?.user.profilePhoto ?? null;
+
+      if (photoPayload !== undefined) {
+        photoToUpdateSession = photoPayload;
       }
 
       // UPDATE PROFILE DATA
       const dataToUpdate = {
         name,
         email,
-        profilePhoto: finalProfilePhoto,
+        profilePhoto: photoPayload,
       };
 
       let response;
@@ -115,7 +121,7 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
         user: {
           ...session.user,
           ...response?.data,
-          profilePhoto: finalProfilePhoto,
+          profilePhoto: photoToUpdateSession,
         },
       });
 
@@ -186,7 +192,7 @@ export function ProfileModal({ onClose, isOpen }: ProfileModalProps) {
                   <img
                     src={ProfilePhotoSrc}
                     alt="Profile"
-                    className="w-[48px] h-[48px] rounded-full object-cover" // Adicionado object-cover
+                    className="w-[48px] h-[48px] rounded-full object-cover"
                   />
                 ) : (
                   <div className="w-[48px] h-[48px] bg-blue-light rounded-full"></div>

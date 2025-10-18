@@ -8,6 +8,7 @@ import {
 } from '../schema/client-schema';
 import { AppError } from '../util/app-error';
 import { UpdatePasswordPayload } from '../schema/user-schema';
+import { handlePhotoUpdateAndCleanup } from '../util/photo-manager';
 
 export class ClientService {
   async create(payload: CreateClientPayload) {
@@ -33,10 +34,23 @@ export class ClientService {
     const { email, password, name, profilePhoto } = payload;
     const hashedPassword = password ? await hash(password, 8) : undefined;
 
+    const existingClient = await prisma.client.findUnique({
+      where: { id },
+    });
+
+    if (!existingClient) {
+      throw new AppError('Cliente não localizado', 404);
+    }
+
+    const newProfilePhotoFileName = await handlePhotoUpdateAndCleanup(
+      existingClient.profilePhoto,
+      profilePhoto,
+    );
+
     const data = await prisma.client.update({
       where: { id },
       data: {
-        profilePhoto: profilePhoto ?? null,
+        profilePhoto: newProfilePhotoFileName,
         name,
         email,
         ...(hashedPassword && { password: hashedPassword }),
