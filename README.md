@@ -37,12 +37,24 @@ O sistema simula um **Gerenciador de Chamados**, permitindo que **Administradore
 
 ---
 
-## 🎬 Live Preview
+## 🎬 Preview
 
-Assista a demonstração do sistema funcionando em tempo real:
+<details>
+  <summary>Clique para abrir screenshots</summary>
 
-// TODO
-[![Watch the video](https://img.shields.io/badge/YouTube-Live%20Preview-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=SEU_VIDEO_AQUI)
+  <br />
+
+![Login](resources/img/login.png)  
+ ![Admin 1](resources/img/admin-1.png)  
+ ![Admin 2](resources/img/admin-2.png)  
+ ![Admin 3](resources/img/admin-3.png)  
+ ![Admin 4](resources/img/admin-4.png)  
+ ![Cliente 1](resources/img/cliente-1.png)  
+ ![Cliente 2](resources/img/cliente-2.png)  
+ ![Cliente 3](resources/img/cliente-3.png)  
+ ![Técnico 1](resources/img/tecnico-1.png)
+
+</details>
 
 ---
 
@@ -80,15 +92,6 @@ Assista a demonstração do sistema funcionando em tempo real:
 ✔️ Alteração de status do chamado (Aberto | Em atendimento | Encerrado)
 ✔️ Mobile First (responsivo)
 ✔️ Os chamados são distribuídos automaticamente para o técnico disponível com menos atendimentos em andamento.
-
----
-
-## 🌍 Deploy
-
-// TODO
-
-- 🔗 [Frontend (Vercel)](https://seu-front.vercel.app)
-- 🔗 [Backend (Render)](https://seu-back.onrender.com)
 
 ---
 
@@ -140,15 +143,16 @@ Durante o desenvolvimento deste projeto:
 Este projeto foi desenvolvido como desafio educacional da **Rocketseat**.
 
 ---
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) 
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white) 
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) 
-![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white) 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white) 
-![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white) 
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white) 
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) 
-![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white) 
-![Zod](https://img.shields.io/badge/Zod-3068B7?style=for-the-badge&logo=zod&logoColor=white) 
-![Vercel](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel) 
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3068B7?style=for-the-badge&logo=zod&logoColor=white)
+![Vercel](https://img.shields.io/badge/Frontend-Vercel-black?style=for-the-badge&logo=vercel)
 ![Render](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)
