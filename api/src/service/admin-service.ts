@@ -10,8 +10,6 @@ export class AdminService {
     const { email, password, name, profilePhoto, availability } = payload;
     const hashedPassword = password ? await hash(password, 8) : undefined;
 
-    console.log('AVAAIL :', payload);
-
     const data = await prisma.technician.update({
       where: { id },
       data: {
@@ -21,7 +19,7 @@ export class AdminService {
         profilePhoto: profilePhoto ?? '',
         availability: {
           deleteMany: {},
-          create: availability.sort((a, b) => a.getTime() - b.getTime()).map((time) => ({ time })),
+          create: availability.sort((a, b) => a.getTime() - b.getTime()).map(time => ({ time })),
         },
       },
       include: { availability: true },
@@ -30,7 +28,7 @@ export class AdminService {
     const { password: _, ...userWithoutPassword } = data;
     const technician = responseTechnicianSchema.parse({
       ...userWithoutPassword,
-      availability: userWithoutPassword.availability.map((a) => a.time),
+      availability: userWithoutPassword.availability.map(a => a.time),
     });
 
     return technician;

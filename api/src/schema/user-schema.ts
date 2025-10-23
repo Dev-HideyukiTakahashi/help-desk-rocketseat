@@ -5,7 +5,7 @@ export const responseUserSchema = z.object({
   email: z.email(),
   name: z.string(),
   role: z.string(),
-  profilePhoto: z.string().nullable(),
+  profilePhoto: z.string().nullable().optional(),
 });
 
 export const updatePasswordSchema = z.object({
